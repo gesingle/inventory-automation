@@ -13,7 +13,7 @@ using namespace std;
 class Movie: public Item {
 
 public:
-    Movie()
+    Movie();
     int getYear();
     string getDirector();
     string getTitle();
