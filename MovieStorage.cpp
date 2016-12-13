@@ -6,15 +6,16 @@
 
 MovieStorage::MovieStorage() {
 
-    clMovies = new MovieTree();
-    coMovies = new MovieTree();
-    drMovies = new MovieTree();
+    clMovies = new ClMovieTree();
+    coMovies = new CoMovieTree();
+    drMovies = new DrMovieTree();
 }
 
 void MovieStorage::addClMovie(string txtLine) {
 
     stringstream ss(txtLine);
     ss.ignore(256, ' ');
+
     string stockStr;
     int stock;
     while(ss.peek() != ','){
@@ -64,17 +65,18 @@ void MovieStorage::addClMovie(string txtLine) {
     }
     year = stoi(yearStr);
 
-    /*
+/*
     cout << stock << endl;
     cout << director << endl;
     cout << title << endl;
     cout << actor << endl;
     cout << month << endl;
     cout << year << endl;
-     */
+*/
 
     ClassicMovie* clMovie = new ClassicMovie(stock, director, title, actor, month, year);
     clMovies->insert(clMovie);
+    //cout << "added clMovie" << endl;
 }
 
 void MovieStorage::addCoMovie(string txtLine) {
@@ -112,10 +114,16 @@ void MovieStorage::addCoMovie(string txtLine) {
     }
     year = stoi(yearStr);
 
+    /*
     cout << stock << endl;
     cout << director << endl;
     cout << title << endl;
     cout << year << endl;
+     */
+
+    ComedyMovie* coMovie = new ComedyMovie(stock, director, title, year);
+    coMovies->insert(coMovie);
+    //cout << "added coMovie" << endl;
 }
 
 
@@ -154,23 +162,28 @@ void MovieStorage::addDrMovie(string txtLine) {
     }
     year = stoi(yearStr);
 
+    /*
     cout << stock << endl;
     cout << director << endl;
     cout << title << endl;
     cout << year << endl;
+     */
+
+    DramaMovie* drMovie = new DramaMovie(stock, director, title, year);
+    drMovies->insert(drMovie);
+    //cout << "added drMovie" << endl;
 }
 
 void MovieStorage::displayClMovies() {
-
     clMovies->display();
 }
 
 void MovieStorage::displayCoMovies() {
-
+    coMovies->display();
 }
 
 void MovieStorage::displayDrMovies() {
-
+    drMovies->display();
 }
 
 

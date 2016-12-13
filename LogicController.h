@@ -17,6 +17,7 @@ public:
     LogicController();
     void buildMovieInventory();
     void buildCustomerTable();
+    void displayMovieInventory();
 
 private:
     MovieStorage* movieInventory;

@@ -23,7 +23,7 @@ void LogicController::buildMovieInventory() {
     string line;
     char genre;
 
-    while(getline(infile, line)){
+    while (!infile.eof()) {
 
         getline(infile, line);
         stringstream ss(line);
@@ -40,11 +40,17 @@ void LogicController::buildMovieInventory() {
             case 'C' :
                 movieInventory->addClMovie(line);
                 break;
+            default:
+                cout << "Genre not valid" << endl;
+                break;
         }
     }
+}
 
+void LogicController::displayMovieInventory() {
+    movieInventory->displayCoMovies();
+    movieInventory->displayDrMovies();
     movieInventory->displayClMovies();
-
 }
 
 
