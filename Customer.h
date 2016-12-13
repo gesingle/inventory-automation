@@ -2,7 +2,7 @@
 #define CUSTOMER_H
 
 #include "Person.h"
-//#include "Transaction.h"
+#include "Transaction.h"
 
 #include <iostream>
 #include <string>
@@ -12,16 +12,18 @@ using namespace std;
 
 class Customer : public Person
 {
+	friend ostream& operator<<(ostream& outs, const Customer& rhs);
 public:
 	Customer();
 	Customer(string first, string last, int number);
 	~Customer();
+
 	void setFName(string name);
 	void setLName(string name);
 	void setCustomerID(int number);
 	std::string getFName() const;
 	std::string getLName() const;
-	int getCustomerID();
+	int getCustomerID() const;
 	//void displayHistory(ostream& outs) const;
 	//bool addHistory(Transaction* borrowed);
 
@@ -30,7 +32,7 @@ private:
 	//string firstName;
 	//string lastName;
 
-	//std::list<Transaction*> transHistory;
+	list<Transaction*> transHistory;
 
 };
 

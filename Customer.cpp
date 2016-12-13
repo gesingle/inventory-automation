@@ -1,12 +1,11 @@
 #include "Customer.h"
-//#include <string>
 
 using namespace std;
 
 Customer::Customer() : Person()
 {
-	firstName = " ";
-	lastName = " ";
+	firstName = "";
+	lastName = "";
 	customerID = -1;
 }
 
@@ -45,7 +44,26 @@ std::string Customer::getLName() const
 	return lastName;
 }
 
-int Customer::getCustomerID()
+int Customer::getCustomerID() const
 {
 	return customerID;
+}
+
+ostream& operator<<(ostream& outs, const Customer& rhs)
+{
+	outs << "Customer: " << rhs.getFName() << " " << rhs.getLName() << "  ID: " << rhs.getCustomerID() << endl;
+	//for (int i = 0; i < rhs.transHistory.size(); i++)
+	Transaction* temp = rhs.transHistory.front();
+	Transaction* end = rhs.transHistory.back();
+	while (temp != end)
+	{
+
+		outs << temp << endl;
+		temp++;
+	}
+	outs << temp << endl;
+
+	delete temp;
+	delete end;
+
 }
