@@ -11,9 +11,9 @@ public:
     virtual bool addToInventory();
     virtual int getStock();
     virtual void setStock();
-    virtual bool operator<();
-    virtual bool operator >();
-    virtual bool operator==();
+    virtual bool operator<(const Item&);
+    virtual bool operator>(const Item&);
+    virtual bool operator==(const Item&);
 
 protected:
     int stock;

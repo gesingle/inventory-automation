@@ -10,3 +10,35 @@ ComedyMovie::ComedyMovie(int s, string d, string t, int y) {
     title = t;
     releaseYear = y;
 }
+
+bool ComedyMovie::operator<(const ComedyMovie& comovie) {
+
+    if(this->title < comovie.getTitle()){
+        return true;
+    }
+
+    if(this->title == comovie.getTitle()){
+        return (this->releaseYear < comovie.getYear()) ? true : false;
+    }
+
+    return false;
+}
+
+bool ComedyMovie::operator>(const ComedyMovie& comovie) {
+
+    if(this-> title > comovie.getTitle()){
+        return true;
+    }
+
+    if(this->title == comovie.getTitle()){
+        return (this->releaseYear > comovie.getYear()) ? true : false;
+    }
+
+    return false;
+}
+
+bool ComedyMovie::operator==(const ComedyMovie& comovie) {
+
+    return (this->title == comovie.getTitle()) && (this->releaseYear == comovie.getYear()) ? true : false;
+
+}

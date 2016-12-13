@@ -10,3 +10,34 @@ DramaMovie::DramaMovie(int s, string d, string t, int y) {
     title = t;
     releaseYear = y;
 }
+
+bool DramaMovie::operator<(const DramaMovie& dmovie) {
+
+    if(this->director < dmovie.getDirector()){
+        return true;
+    }
+
+    if(this->director == dmovie.getDirector()){
+        return (this->title < dmovie.getTitle());
+    }
+
+    return false;
+}
+
+bool DramaMovie::operator>(const DramaMovie& dmovie) {
+
+    if(this->director > dmovie.getDirector()){
+        return true;
+    }
+
+    if(this->director == dmovie.getDirector()){
+        return (this->title > dmovie.getTitle());
+    }
+
+    return false;
+}
+
+bool DramaMovie::operator==(const DramaMovie& dmovie) {
+
+    return (this->director == dmovie.getDirector()) && (this->title == dmovie.getTitle());
+}

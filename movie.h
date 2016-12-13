@@ -14,10 +14,14 @@ class Movie: public Item {
 
 public:
     Movie();
-    int getYear();
-    string getDirector();
-    string getTitle();
-    enum getGenre();
+    int getYear() const;
+    string getDirector() const;
+    string getTitle() const;
+    char getGenre() const;
+    int getStock() const;
+    void addToInventory() const;
+    void setStock(int);
+
 
 protected:
     int releaseYear;
@@ -25,11 +29,9 @@ protected:
     string director;
     char mediaType;
     char genre;
-
-
-
-
-};
+    int stock;
+}
+;
 
 
 #endif //INC_343A4_MOVIE_H
