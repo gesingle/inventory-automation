@@ -13,7 +13,7 @@ public:
 	Inventory();
 	~Inventory();
 	void makeAction();
-	void displayInventory(BSTree* movie); //overload for different movie trees.
+	//void displayInventory(BSTree* movie); //overload for different movie trees.
 };
 
 #endif

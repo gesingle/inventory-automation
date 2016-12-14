@@ -11,3 +11,8 @@ Transaction::~Transaction()
 {
 
 }
+
+void Transaction::setMovieTree(MovieTree* movieRoot)
+{
+	movieTree = movieRoot;
+}

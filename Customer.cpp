@@ -66,4 +66,6 @@ ostream& operator<<(ostream& outs, const Customer& rhs)
 	delete temp;
 	delete end;
 
+	return outs;
+
 }
