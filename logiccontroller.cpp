@@ -105,19 +105,15 @@ void LogicController::buildCommands() {
 
         switch (command) {
             case 'B':
-                cout << "parsing borrow" << endl;
                 parseBorrowReturn(line, command);
                 break;
             case 'R' :
-                cout << "parsing return" << endl;
                 parseBorrowReturn(line, command);
                 break;
             case 'H' :
-                cout << "parsing history" << endl;
                 parseHistory(line);
                 break;
             case 'I' :
-                cout << "parsing inventory" << endl;
                 //displayMovieInventory();
                 break;
             default:
@@ -161,7 +157,6 @@ void LogicController::parseBorrowReturn(string txtLine, char command) {
 
     switch(genre){
         case 'F':
-            cout << "parsing a comedy" << endl;
             while(ss.peek() != ','){
                 title += ss.get();
             }
@@ -173,8 +168,6 @@ void LogicController::parseBorrowReturn(string txtLine, char command) {
             year = stoi(yearStr);
             break;
         case 'D' :
-            cout << "parsing a drama" << endl;
-
             while(ss.peek() != ','){
                 director += ss.get();
             }
@@ -185,7 +178,6 @@ void LogicController::parseBorrowReturn(string txtLine, char command) {
             }
             break;
         case 'C' :
-            cout << "parsing a classic" << endl;
             ss >> monthStr;
             ss.ignore();
             for(int i = 0; i < 4; i++){
