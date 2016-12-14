@@ -14,6 +14,7 @@ public:
     DrMovieTree();
     bool insert(DramaMovie* movie);
     void display() const;
+    bool retrieve(const DramaMovie&, DramaMovie* &) const;
 
 private:
     struct MovieNode {

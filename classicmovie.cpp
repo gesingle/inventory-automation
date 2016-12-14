@@ -52,7 +52,8 @@ bool ClassicMovie::operator>(const ClassicMovie& clmovie) const{
 
 bool ClassicMovie::operator==(const ClassicMovie& clmovie) const{
 
-    return (this->releaseYear == clmovie.getYear()) && (this->actor == clmovie.getActor());
+    return (this->releaseYear == clmovie.getYear()) && (this->releaseMonth == clmovie.getReleaseMonth()) &&
+            (this->actor == clmovie.getActor());
 
 }
 

@@ -27,7 +27,9 @@ private:
     CustomerTable* customerTable;
     void parseBorrowReturn(string, char);
     void parseHistory(string);
+    void borrowClMovie(int, int, string);
     void borrowCoMovie(string, int, int);
+    void borrowDrMovie(string, string);
     void returnMovie(const Movie*, int);
     void custHistory(int);
 

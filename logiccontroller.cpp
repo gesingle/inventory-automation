@@ -178,6 +178,7 @@ void LogicController::parseBorrowReturn(string txtLine, char command) {
             while(ss.peek() != ','){
                 title += ss.get();
             }
+            borrowDrMovie(director, title);
             break;
         case 'C' :
             ss >> monthStr;
@@ -191,6 +192,7 @@ void LogicController::parseBorrowReturn(string txtLine, char command) {
             }
             month = stoi(monthStr);
             year = stoi(yearStr);
+            borrowClMovie(month, year, actor);
             break;
         default :
             cout << "Invalid genre" << endl;
@@ -210,9 +212,32 @@ void LogicController::parseHistory(string line) {
     }
     custID = stoi(custIDStr);
 }
+void LogicController::borrowClMovie(int month, int year, string actor) {
+
+    cout << "borrowing Cl" << endl;
+    cout << month << ":" << year << ":" << actor << endl;
+    ClMovieTree* clMovies = movieInventory->getClMovies();
+    ClassicMovie* movie = new ClassicMovie(0, "", "", actor, month, year);
+    ClassicMovie* moviePtr;
+    bool found;
+    found = clMovies->retrieve(*movie, moviePtr);
+    if(found){
+        if(moviePtr->getStock() > 0){
+            moviePtr->setStock(moviePtr->getStock() - 1);
+        }
+        else{
+            cout << "Movie is out of stock" << endl;
+        }
+    }
+    else{
+        cout << "Movie not found." << endl;
+    }
+    delete movie;
+}
 
 void LogicController::borrowCoMovie(string title, int year, int custID) {
 
+    cout << "borrowing Co" << endl;
     CoMovieTree* coMovies = movieInventory->getCoMovies();
     ComedyMovie* movie = new ComedyMovie(0, "", title, year);
     ComedyMovie* moviePtr;
@@ -225,13 +250,34 @@ void LogicController::borrowCoMovie(string title, int year, int custID) {
         else{
             cout << "Movie is out of stock" << endl;
         }
+        //delete moviePtr;
     }
     else{
-        cout << "Movie not found.";
-        delete moviePtr;
+        cout << "Movie not found." << endl;
     }
     delete movie;
+}
 
+void LogicController::borrowDrMovie(string director, string title) {
+
+    cout << "borrowing Dr" << endl;
+    DrMovieTree* drMovies = movieInventory->getDrMovies();
+    DramaMovie* movie = new DramaMovie(0, director, title, 0);
+    DramaMovie* moviePtr;
+    bool found;
+    found = drMovies->retrieve(*movie, moviePtr);
+    if(found){
+        if(moviePtr->getStock() > 0){
+            moviePtr->setStock(moviePtr->getStock() - 1);
+        }
+        else{
+            cout << "Movie is out of stock" << endl;
+        }
+    }
+    else{
+        cout << "Movie not found." << endl;
+    }
+    delete movie;
 }
 
 void LogicController::returnMovie(const Movie* movie, int custID) {
@@ -241,6 +287,10 @@ void LogicController::returnMovie(const Movie* movie, int custID) {
 void LogicController::custHistory(int custID) {
 
 }
+
+
+
+
 
 
 
