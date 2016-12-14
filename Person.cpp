@@ -9,6 +9,9 @@ Person::Person()
 	firstName = " ";
 	lastName = " ";
 }
+Person::~Person()
+{
+}
 
 Person::Person(string first, string last)
 {

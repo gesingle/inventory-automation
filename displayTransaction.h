@@ -1,3 +1,7 @@
+//
+// Created by Cody Snow on 12/12/2016
+//
+
 #ifndef DISPLAYTRANSACTION_H
 #define DISPLAYTRANSACTION_H
 

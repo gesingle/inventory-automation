@@ -48,6 +48,9 @@ void LogicController::buildMovieInventory() {
 
 }
 
+//
+// Created by Cody Snow on 12/13/2016
+//
 void LogicController::buildCustomerTable()
 {
 	customerTable = new CustomerTable();
@@ -69,7 +72,7 @@ void LogicController::buildCustomerTable()
 		custFile >> last;
 		custFile >> first;
 
-		if (!(custID < 0000 || custID > 9999))
+		if (!(custID < 0000 || custID > 9999)) //check for valid customerID
 		{
 			customer = new Customer(first, last, custID);
 			customerTable->addCustomer(customer);

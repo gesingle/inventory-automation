@@ -1,3 +1,7 @@
+//
+// Created by Cody Snow on 12/01/2016
+//
+
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
@@ -13,6 +17,7 @@ using namespace std;
 class Customer : public Person
 {
 	friend ostream& operator<<(ostream& outs, const Customer& rhs);
+
 public:
 	Customer();
 	Customer(string first, string last, int number);
@@ -24,16 +29,15 @@ public:
 	std::string getFName() const;
 	std::string getLName() const;
 	int getCustomerID() const;
+
+	// Transaction History Functions
+
 	//void displayHistory(ostream& outs) const;
 	//bool addHistory(Transaction* borrowed);
 
 private:
 	int customerID;
-	//string firstName;
-	//string lastName;
-
 	list<Transaction*> transHistory;
-
 };
 
 

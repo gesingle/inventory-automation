@@ -1,6 +1,10 @@
 #ifndef TRANSACTIONFACTORY_H
 #define TRANSACTIONFACTORY_H
 
+//
+// Created by Cody Snow on 12/12/2016
+//
+
 #include <iostream>
 #include "Transaction.h"
 #include "actionTransaction.h"

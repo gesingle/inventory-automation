@@ -1,13 +1,19 @@
+//
+// Created by Cody Snow on 12/12/2016
+//
+
 #include "History.h"
 #include "Customer.h"
 
 History::History()
 {
 }
-//History::History(Customer* cust)
-//{
-//	customer = cust;
-//}
+
+History::History(Customer* cust)
+{
+	customer = cust;
+}
+
 History::~History() 
 {
 }
@@ -24,9 +30,9 @@ void History::printHistory()
 }
 
 
-void History::setCustomer(Customer& cust)
+void History::setCustomer(Customer* cust)
 {
-	this->customer = &cust;
+	customer = cust;
 }
 
 

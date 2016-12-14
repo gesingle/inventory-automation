@@ -1,3 +1,7 @@
+//
+// Created by Cody Snow on 12/01/2016
+//
+
 #ifndef PERSON_H
 #define PERSON_H
 
@@ -10,10 +14,7 @@ class Person {
 
 public:
 	Person();
-	~Person()
-	{
-		//intentionally blank
-	}
+	~Person();
 	Person(string first, string last);
 	virtual string getFName();
 	virtual void setFName(string name);

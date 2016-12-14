@@ -1,6 +1,7 @@
 //		
 // Created by Cody Snow on 12/12/16.
 // Last Modified 12/13/16 (added operator<< and display function, implemented double hash
+//
 
 #include "CustomerTable.h"
 
@@ -18,7 +19,6 @@ CustomerTable::CustomerTable(const CustomerTable& copy) //copy constructor, make
 	table = NULL;
 	size = TABLESIZE_SMALL;
 	
-
 	table = new Node*[size];
 
 	for (int i = 0; i < size; i++)

@@ -1,4 +1,10 @@
+//
+// Created by Cody Snow on 12/12/2016
+//
+
 #include "Inventory.h"
+
+
 
 Inventory::Inventory()
 {
@@ -10,12 +16,12 @@ Inventory::~Inventory()
 
 void Inventory::makeAction()
 {
-	//displayInventory(BSTree* movie);
+	displayInventory(movieTree);
 	cout << "In inventory.makeAction()" << endl;
 }
 
-/*void Inventory::displayInventory(BSTree* movie)
+void Inventory::displayInventory(MovieTree* movies)
 {
-	//move full left and display, up display, right display
+	//perform inorder traversal of movies
 	cout << "In inventory.displayInventory()" << endl;
-}*/
+}

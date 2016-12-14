@@ -1,3 +1,8 @@
+//
+// Created by Cody Snow on 12/01/2016
+// Last Modified 12/12/2016 -> added operator>> and display functions
+//
+
 #include "Customer.h"
 
 using namespace std;
@@ -17,7 +22,6 @@ Customer::Customer(string first, string last, int number) : Person(first, last)
 }
 Customer::~Customer()
 {
-	//intentionally blank
 }
 void Customer::setFName(std::string name)
 {
@@ -52,12 +56,10 @@ int Customer::getCustomerID() const
 ostream& operator<<(ostream& outs, const Customer& rhs)
 {
 	outs << "Customer: " << rhs.getFName() << " " << rhs.getLName() << "  ID: " << rhs.getCustomerID() << endl;
-	//for (int i = 0; i < rhs.transHistory.size(); i++)
 	Transaction* temp = rhs.transHistory.front();
 	Transaction* end = rhs.transHistory.back();
 	while (temp != end)
 	{
-
 		outs << temp << endl;
 		temp++;
 	}

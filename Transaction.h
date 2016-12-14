@@ -1,3 +1,7 @@
+//
+// Created by Cody Snow on 12/12/2016
+//
+
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
@@ -16,7 +20,7 @@ public:
 	Transaction();
 	~Transaction();
 
-	void setMovieTree(MovieTree* movieRoot);
+	void setMovieTree(MovieTree* movies);
 	virtual void makeAction() = 0;
 
 protected:
