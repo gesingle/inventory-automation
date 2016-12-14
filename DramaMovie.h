@@ -11,9 +11,9 @@ class DramaMovie : public Movie {
 
 public:
 	DramaMovie(int, string, string, int);
-	bool operator<(const DramaMovie&);
-	bool operator>(const DramaMovie&);
-	bool operator==(const DramaMovie&);
+	bool operator<(const DramaMovie&) const;
+	bool operator>(const DramaMovie&) const;
+	bool operator==(const DramaMovie&) const;
 };
 
 #endif //INC_343A4_DRAMAMOVIE_H

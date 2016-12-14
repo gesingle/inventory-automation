@@ -10,6 +10,8 @@
 
 LogicController::LogicController() {
 
+	buildMovieInventory();
+	buildCustomerTable();
 }
 
 void LogicController::buildMovieInventory() {
@@ -85,11 +87,10 @@ void LogicController::buildCustomerTable() {
 	custFile.close();
 }
 
-
-void LogicController::displayCustomerTable() {
+void LogicController::displayCustomerTable()
+{
 	customerTable->displayCustomers();
 }
-
 
 void LogicController::buildCommands() {
 	// "/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4commands.txt"
@@ -119,7 +120,7 @@ void LogicController::buildCommands() {
 			parseHistory(line);
 			break;
 		case 'I':
-			//displayMovieInventory();
+			displayMovieInventory();
 			break;
 		default:
 			cout << "Invalid Command" << endl;
@@ -171,6 +172,7 @@ void LogicController::parseBorrowReturn(string txtLine, char command) {
 			yearStr += ss.get();
 		}
 		year = stoi(yearStr);
+		borrowCoMovie(title, year, custID);
 		break;
 	case 'D':
 		while (ss.peek() != ',') {
@@ -212,4 +214,214 @@ void LogicController::parseHistory(string line) {
 		custIDStr += ss.get();
 	}
 	custID = stoi(custIDStr);
+}
+
+
+void LogicController::borrowClMovie(int month, int year, string actor) {
+
+	cout << "borrowing Cl" << endl;
+	cout << month << ":" << year << ":" << actor << endl;
+	ClMovieTree* clMovies = movieInventory->getClMovies();
+	ClassicMovie* movie = new ClassicMovie(0, "", "", actor, month, year);
+	ClassicMovie* moviePtr;
+	bool found;
+	found = clMovies->retrieve(*movie, moviePtr);
+	if (found) {
+		if (moviePtr->getStock() > 0) {
+			moviePtr->setStock(moviePtr->getStock() - 1);
+		}
+		else {
+			cout << "Movie is out of stock" << endl;
+		}
+	}
+	else {
+		cout << "Movie not found." << endl;
+	}
+	delete movie;
+}
+
+
+void LogicController::borrowCoMovie(string title, int year, int custID) {
+
+	CoMovieTree* coMovies = movieInventory->getCoMovies();
+	ComedyMovie* movie = new ComedyMovie(0, "", title, year);
+	ComedyMovie* moviePtr;
+	bool found;
+	found = coMovies->retrieve(*movie, moviePtr);
+	if (found) {
+		if (moviePtr->getStock() > 0) {
+			moviePtr->setStock(moviePtr->getStock() - 1);
+		}
+		else {
+			cout << "Movie is out of stock" << endl;
+		}
+	}
+	else {
+		cout << "Movie not found.";
+		delete moviePtr;
+	}
+	delete movie;
+
+}
+
+
+void LogicController::borrowDrMovie(string director, string title) {
+
+	cout << "borrowing Dr" << endl;
+	DrMovieTree* drMovies = movieInventory->getDrMovies();
+	DramaMovie* movie = new DramaMovie(0, director, title, 0);
+	DramaMovie* moviePtr;
+	bool found;
+	found = drMovies->retrieve(*movie, moviePtr);
+	if (found) {
+		if (moviePtr->getStock() > 0) {
+			moviePtr->setStock(moviePtr->getStock() - 1);
+		}
+		else {
+			cout << "Movie is out of stock" << endl;
+		}
+	}
+	else {
+		cout << "Movie not found." << endl;
+	}
+	delete movie;
+}
+
+void LogicController::returnCoMovie(string title, int year, int custID) {
+
+	CoMovieTree* coMovies = movieInventory->getCoMovies();
+	ComedyMovie* movie = new ComedyMovie(0, "", title, year);
+	ComedyMovie* moviePtr;
+	Customer* returnCustomer = new Customer();
+	bool found;
+	found = coMovies->retrieve(*movie, moviePtr);
+	if (found) 
+	{
+		bool foundCust = customerTable->retrieveCustomer(custID, *returnCustomer);
+		if (foundCust)
+		{
+			
+			string customerBorrow = "B D F " + title + ", " + to_string(year);
+			bool borrowed = returnCustomer->hasBorrowed(customerBorrow);
+			{
+				if (borrowed)
+				{
+					moviePtr->setStock(moviePtr->getStock() + 1);
+
+					string customerReturn = "R D F " + title + ", " + to_string(year);
+					returnCustomer->addHistory(customerReturn);
+				}
+				
+				else
+					cout << "Customer didn't borrow movie.\n";
+			}
+		}
+		else
+		{
+			cout << "Customer not found.\n";
+		}
+	}
+	else 
+	{
+		cout << "Movie not found.";
+		delete moviePtr;
+	}
+	delete movie;
+}
+
+void LogicController::returnClMovie(int month, int year, string actor, int custID)
+{
+	ClMovieTree* clMovies = movieInventory->getClMovies();
+	ClassicMovie* movie = new ClassicMovie(0, "", "", actor, month, year);
+	ClassicMovie* moviePtr;
+	Customer* returnCustomer = new Customer();
+	bool found;
+
+	found = clMovies->retrieve(*movie, moviePtr);
+	if (found)
+	{
+		bool foundCust = customerTable->retrieveCustomer(custID, *returnCustomer);
+		if (foundCust)
+		{
+
+			string customerBorrow = "B D C " + to_string(month) + ", " + to_string(year) + actor;
+			bool borrowed = returnCustomer->hasBorrowed(customerBorrow);
+			{
+				if (borrowed)
+				{
+					moviePtr->setStock(moviePtr->getStock() + 1);
+
+					string customerReturn = "R D C " + to_string(month) + ", " + to_string(year) + actor;
+					returnCustomer->addHistory(customerReturn);
+				}
+
+				else
+					cout << "Customer didn't borrow movie.\n";
+			}
+		}
+		else
+		{
+			cout << "Customer not found.\n";
+		}
+	}
+	else
+	{
+		cout << "Movie not found.";
+		delete moviePtr;
+	}
+	delete movie;
+}
+
+void LogicController::returnDrMovie(string director, string title, int custID) {
+
+	DrMovieTree* drMovies = movieInventory->getDrMovies();
+	DramaMovie* movie = new DramaMovie(0, director, title, 0);
+	DramaMovie* moviePtr;
+	Customer* returnCustomer = new Customer();
+	bool found;
+
+	found = drMovies->retrieve(*movie, moviePtr);
+	if (found)
+	{
+		bool foundCust = customerTable->retrieveCustomer(custID, *returnCustomer);
+		if (foundCust)
+		{
+
+			string customerBorrow = "B D D " + director + ", " + title;
+			bool borrowed = returnCustomer->hasBorrowed(customerBorrow);
+			{
+				if (borrowed)
+				{
+					moviePtr->setStock(moviePtr->getStock() + 1);
+
+					string customerReturn = "R D D " + director + ", " + title;
+					returnCustomer->addHistory(customerReturn);
+				}
+
+				else
+					cout << "Customer didn't borrow movie.\n";
+			}
+		}
+		else
+		{
+			cout << "Customer not found.\n";
+		}
+	}
+	else
+	{
+		cout << "Movie not found.";
+		delete moviePtr;
+	}
+	delete movie;
+}
+
+void LogicController::custHistory(int custID) {
+	
+	Customer* customer = new Customer();
+	
+	bool found = customerTable->retrieveCustomer(custID, *customer);
+	if (found)
+		customer->displayHistory();
+
+
 }

@@ -9,9 +9,10 @@ ComedyMovie::ComedyMovie(int s, string d, string t, int y) {
 	director = d;
 	title = t;
 	releaseYear = y;
+	genre = 'F';
 }
 
-bool ComedyMovie::operator<(const ComedyMovie& comovie) {
+bool ComedyMovie::operator<(const ComedyMovie& comovie) const {
 
 	if (this->title < comovie.getTitle()) {
 		return true;
@@ -24,7 +25,7 @@ bool ComedyMovie::operator<(const ComedyMovie& comovie) {
 	return false;
 }
 
-bool ComedyMovie::operator>(const ComedyMovie& comovie) {
+bool ComedyMovie::operator>(const ComedyMovie& comovie) const {
 
 	if (this->title > comovie.getTitle()) {
 		return true;
@@ -37,7 +38,7 @@ bool ComedyMovie::operator>(const ComedyMovie& comovie) {
 	return false;
 }
 
-bool ComedyMovie::operator==(const ComedyMovie& comovie) {
+bool ComedyMovie::operator==(const ComedyMovie& comovie) const {
 
 	return (this->title == comovie.getTitle()) && (this->releaseYear == comovie.getYear()) ? true : false;
 

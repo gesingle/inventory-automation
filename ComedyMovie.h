@@ -13,9 +13,9 @@ class ComedyMovie : public Movie {
 
 public:
 	ComedyMovie(int, string, string, int);
-	bool operator<(const ComedyMovie&);
-	bool operator>(const ComedyMovie&);
-	bool operator==(const ComedyMovie&);
+	bool operator<(const ComedyMovie&) const;
+	bool operator>(const ComedyMovie&) const;
+	bool operator==(const ComedyMovie&) const;
 };
 
 

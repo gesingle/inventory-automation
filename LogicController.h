@@ -2,6 +2,7 @@
 // Created by Garrett Singletary on 12/12/16.
 //
 
+
 //
 // Created by Garrett Singletary on 12/12/16.
 //
@@ -32,6 +33,14 @@ private:
 	CustomerTable* customerTable;
 	void parseBorrowReturn(string, char);
 	void parseHistory(string);
+	void borrowClMovie(int, int, string);
+	void borrowCoMovie(string, int, int);
+	void borrowDrMovie(string, string);
+	void returnCoMovie(string, int, int);
+	void returnClMovie(int, int, string, int);
+	void returnDrMovie(string, string, int);
+	void custHistory(int);
+
 };
 
 

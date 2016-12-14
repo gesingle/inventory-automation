@@ -31,8 +31,9 @@ public:
 	int getCustomerID() const;
 
 	// Transaction History Functions
-	void displayHistory(ostream& outs) const;
+	void displayHistory() const;
 	bool addHistory(string transaction);  //add a borrow or return transaction string to customer's history
+	bool hasBorrowed(string title);
 	
 private:
 	int customerID;

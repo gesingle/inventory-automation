@@ -185,3 +185,16 @@ void MovieStorage::displayCoMovies() {
 void MovieStorage::displayDrMovies() {
 	drMovies->display();
 }
+
+ClMovieTree *MovieStorage::getClMovies() {
+	return clMovies;
+}
+
+CoMovieTree *MovieStorage::getCoMovies() {
+	return coMovies;
+}
+
+DrMovieTree *MovieStorage::getDrMovies() {
+	return drMovies;
+}
+

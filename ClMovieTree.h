@@ -14,6 +14,7 @@ public:
 	ClMovieTree();
 	bool insert(ClassicMovie* movie);
 	void display() const;
+	bool retrieve(const ClassicMovie&, ClassicMovie* &) const;
 
 private:
 	struct MovieNode {

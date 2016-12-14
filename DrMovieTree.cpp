@@ -51,11 +51,41 @@ void DrMovieTree::displayHelper(MovieNode* node) const {
 
 	if (node != NULL) {
 		displayHelper(node->left);
-		cout << node->movie->getDirector() << " " << node->movie->getTitle() << endl;
+		cout << node->movie->getStock() << " " << node->movie->getDirector() << " " << node->movie->getTitle() << endl;
 		displayHelper(node->right);
 	}
 }
 
 void DrMovieTree::display() const {
 	displayHelper(this->root);
+}
+
+bool DrMovieTree::retrieve(const DramaMovie& movie, DramaMovie*& moviePtr) const {
+
+	// temp node for tree traversal
+	MovieNode* current = root;
+	bool found = false;
+
+	while (!found) {
+		if (movie < *current->movie) {
+			if (current->left == NULL) {
+				return false;
+			}
+			else
+				current = current->left;
+		}
+		else if (movie > *current->movie) {
+			if (current->right == NULL) {
+				return false;
+			}
+			else
+				current = current->right;
+		}
+		else {
+			moviePtr = current->movie;
+			found = true;
+		}
+	}
+
+	return true;
 }

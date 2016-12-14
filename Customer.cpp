@@ -53,9 +53,9 @@ int Customer::getCustomerID() const
 	return customerID;
 }
 
-void Customer::displayHistory(ostream& outs) const
+void Customer::displayHistory() const // change to outstream
 {
-	outs << this << endl;
+	cout << this << endl;
 }
 
 bool Customer::addHistory(string transaction)
@@ -64,12 +64,22 @@ bool Customer::addHistory(string transaction)
 	return true;
 }
 
+bool Customer::hasBorrowed(string title)
+{
+	for (unsigned int i = 0; i < this->transHistory.size(); i++)
+	{
+		if (this->transHistory.at(i) == title)
+			return true;
+	}
+		return false;
+}
+
 
 ostream& operator<<(ostream& outs, const Customer& rhs)
 {
 	outs << "Customer: " << rhs.getFName() << " " << rhs.getLName() << "  ID: " << rhs.getCustomerID() << endl;
 	
-	for (int i = 0; i < rhs.transHistory.size(); i++)
+	for (unsigned int i = 0; i < rhs.transHistory.size(); i++)
 		outs << rhs.transHistory[i] << endl;
 		
 	return outs;

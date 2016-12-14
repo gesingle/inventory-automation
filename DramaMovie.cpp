@@ -9,9 +9,10 @@ DramaMovie::DramaMovie(int s, string d, string t, int y) {
 	director = d;
 	title = t;
 	releaseYear = y;
+	genre = 'D';
 }
 
-bool DramaMovie::operator<(const DramaMovie& dmovie) {
+bool DramaMovie::operator<(const DramaMovie& dmovie) const {
 
 	if (this->director < dmovie.getDirector()) {
 		return true;
@@ -24,7 +25,7 @@ bool DramaMovie::operator<(const DramaMovie& dmovie) {
 	return false;
 }
 
-bool DramaMovie::operator>(const DramaMovie& dmovie) {
+bool DramaMovie::operator>(const DramaMovie& dmovie) const {
 
 	if (this->director > dmovie.getDirector()) {
 		return true;
@@ -37,7 +38,7 @@ bool DramaMovie::operator>(const DramaMovie& dmovie) {
 	return false;
 }
 
-bool DramaMovie::operator==(const DramaMovie& dmovie) {
+bool DramaMovie::operator==(const DramaMovie& dmovie) const {
 
 	return (this->director == dmovie.getDirector()) && (this->title == dmovie.getTitle());
 }

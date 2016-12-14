@@ -14,6 +14,7 @@ public:
 	CoMovieTree();
 	bool insert(ComedyMovie* movie);
 	void display() const;
+	bool retrieve(const ComedyMovie&, ComedyMovie* &) const;
 
 private:
 	struct MovieNode {

@@ -11,9 +11,10 @@ ClassicMovie::ClassicMovie(int s, string d, string t, string a, int m, int y) {
 	actor = a;
 	releaseMonth = m;
 	releaseYear = y;
+	genre = 'C';
 }
 
-bool ClassicMovie::operator<(const ClassicMovie& clmovie) {
+bool ClassicMovie::operator<(const ClassicMovie& clmovie) const {
 
 	if (this->releaseYear < clmovie.getYear()) {
 		return true;
@@ -31,7 +32,7 @@ bool ClassicMovie::operator<(const ClassicMovie& clmovie) {
 	return false;
 }
 
-bool ClassicMovie::operator>(const ClassicMovie& clmovie) {
+bool ClassicMovie::operator>(const ClassicMovie& clmovie) const {
 
 	if (this->releaseYear > clmovie.getYear()) {
 		return true;
@@ -49,9 +50,10 @@ bool ClassicMovie::operator>(const ClassicMovie& clmovie) {
 	return false;
 }
 
-bool ClassicMovie::operator==(const ClassicMovie& clmovie) {
+bool ClassicMovie::operator==(const ClassicMovie& clmovie) const {
 
-	return (this->releaseYear == clmovie.getYear()) && (this->actor == clmovie.getActor());
+	return (this->releaseYear == clmovie.getYear()) && (this->releaseMonth == clmovie.getReleaseMonth()) &&
+		(this->actor == clmovie.getActor());
 
 }
 
