@@ -1,12 +1,16 @@
+//
+// Created by Cody Snow on 12/01/2016
+// Last Modified 12/12/2016 -> added operator>> and display functions
+//
+
 #include "Customer.h"
-//#include <string>
 
 using namespace std;
 
 Customer::Customer() : Person()
 {
-	firstName = " ";
-	lastName = " ";
+	firstName = "";
+	lastName = "";
 	customerID = -1;
 }
 
@@ -18,7 +22,6 @@ Customer::Customer(string first, string last, int number) : Person(first, last)
 }
 Customer::~Customer()
 {
-	//intentionally blank
 }
 void Customer::setFName(std::string name)
 {
@@ -45,7 +48,30 @@ std::string Customer::getLName() const
 	return lastName;
 }
 
-int Customer::getCustomerID()
+int Customer::getCustomerID() const
 {
 	return customerID;
+}
+
+void Customer::displayHistory(ostream& outs) const
+{
+	outs << this << endl;
+}
+
+bool Customer::addHistory(string transaction)
+{
+	transHistory.push_back(transaction);
+	return true;
+}
+
+
+ostream& operator<<(ostream& outs, const Customer& rhs)
+{
+	outs << "Customer: " << rhs.getFName() << " " << rhs.getLName() << "  ID: " << rhs.getCustomerID() << endl;
+	
+	for (int i = 0; i < rhs.transHistory.size(); i++)
+		outs << rhs.transHistory[i] << endl;
+		
+	return outs;
+
 }

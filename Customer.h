@@ -1,37 +1,44 @@
+//
+// Created by Cody Snow on 12/01/2016
+//
+
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
 #include "Person.h"
-//#include "Transaction.h"
+#include "Transaction.h"
 
 #include <iostream>
 #include <string>
-#include <list>
+#include <vector>
 
 using namespace std;
 
 class Customer : public Person
 {
+	friend ostream& operator<<(ostream& outs, const Customer& rhs);
+
 public:
 	Customer();
 	Customer(string first, string last, int number);
 	~Customer();
+
 	void setFName(string name);
 	void setLName(string name);
 	void setCustomerID(int number);
 	std::string getFName() const;
 	std::string getLName() const;
-	int getCustomerID();
-	//void displayHistory(ostream& outs) const;
-	//bool addHistory(Transaction* borrowed);
+	int getCustomerID() const;
+
+	// Transaction History Functions
+
+	void displayHistory(ostream& outs) const;
+	bool addHistory(string transaction);
+	
 
 private:
 	int customerID;
-	//string firstName;
-	//string lastName;
-
-	//std::list<Transaction*> transHistory;
-
+	vector<string> transHistory;
 };
 
 
