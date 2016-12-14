@@ -82,6 +82,7 @@ bool ClMovieTree::retrieve(const ClassicMovie& movie, ClassicMovie*& moviePtr) c
                 current = current->right;
         }
         else {
+            cout << "found" << endl;
             moviePtr = current->movie;
             found = true;
         }
@@ -89,3 +90,4 @@ bool ClMovieTree::retrieve(const ClassicMovie& movie, ClassicMovie*& moviePtr) c
 
     return true;
 }
+

@@ -27,11 +27,15 @@ private:
     CustomerTable* customerTable;
     void parseBorrowReturn(string, char);
     void parseHistory(string);
-    void borrowClMovie(int, int, string);
+    void borrowClMovie(int, int, string, int);
     void borrowCoMovie(string, int, int);
-    void borrowDrMovie(string, string);
-    void returnMovie(const Movie*, int);
+    void borrowDrMovie(string, string, int);
+    void returnClMovie(int, int, string, int);
+    void returnCoMovie(string, int, int);
+    void returnDrMovie(string, string, int);
     void custHistory(int);
+
+
 
 };
 

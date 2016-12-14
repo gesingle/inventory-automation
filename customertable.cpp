@@ -1,8 +1,9 @@
 //
 // Created by Cody Snow on 12/12/16.
 // Last Modified 12/13/16 (added operator<< and display function, implemented double hash
+//
 
-#include "customertable.h"
+#include "CustomerTable.h"
 
 CustomerTable::CustomerTable()
 {
@@ -17,7 +18,6 @@ CustomerTable::CustomerTable(const CustomerTable& copy) //copy constructor, make
 {
     table = NULL;
     size = TABLESIZE_SMALL;
-
 
     table = new Node*[size];
 
@@ -88,7 +88,6 @@ bool CustomerTable::addCustomer(Customer* newCustomer)
 {
     int collisions = 0;
     bool isAdded = false;
-    int loopHolder = 0;
 
     Node* newNode = new Node;
     newNode->customerData = newCustomer;
@@ -102,24 +101,18 @@ bool CustomerTable::addCustomer(Customer* newCustomer)
         customerCount++;
         isAdded = true;
     }
-    else
+    else //table[hash] is occupied
     {
-        while (table[hash] == NULL)  // this needs to repreat in a while loop, but becomes an infinite loop
-        {
-            collisions++;
-            hash = performDoubleHash(newCustomer, collisions);
-            if (table[hash] == NULL)
-            {
-                newNode->hashIndex = hash; //assigns hashIndex with array element
-                table[hash] = newNode;
-                customerCount++;
-                isAdded = true;
-                break;
-            }
-        }
+        collisions++;
+        hash = performDoubleHash(newCustomer, collisions); //recursively double hashes until an empty hash is found
+
+        newNode->hashIndex = hash; //assigns hashIndex with array element
+        table[hash] = newNode;
+        customerCount++;
+        isAdded = true;
     }
 
-    if (customerCount / size >= 1.0) //if # of stored customers is greater than or equal to the size, increase the size
+    if ((customerCount / size) >= 1.0) //if # of stored customers is greater than or equal to the size, increase the size
     {
         increaseTableSize();
     }
@@ -135,13 +128,32 @@ int CustomerTable::performHash(Customer* newCustomer) //default single hash
     return (custID % size);
 }
 
-int CustomerTable::performDoubleHash(Customer* newCustomer, int collisions)
+int CustomerTable::performDoubleHash(Customer* newCustomer, int& collisions)
 {
+    bool occupied = true;
     int custID = newCustomer->getCustomerID();
     int firstHash = custID % size;
     int newMod = size - 2;
     int doubleHash = (newMod - (custID % newMod));
-    return ((firstHash + (collisions * (doubleHash))) % size);
+    doubleHash = ((firstHash + (collisions * (doubleHash))) % size);
+
+    occupied = isOccupied(doubleHash);
+
+    if (occupied == true)
+    {
+        collisions++;
+        return performDoubleHash(newCustomer, collisions);
+    }
+    else
+        return doubleHash;
+}
+
+bool CustomerTable::isOccupied(int& hash)
+{
+    if (table[hash] != NULL)
+        return true;
+    else
+        return false;
 }
 
 
@@ -213,21 +225,40 @@ void CustomerTable::increaseTableSize()
     //delete newTable?
 }
 
-/*
-bool CustomerTable::retrieveCustomer(int custID, Customer*& cust) //needs update
+
+bool CustomerTable::retrieveCustomer(int custID, Customer& cust) //needs update
 {
-	int hash = custID % size;
-	Node* temp = table[hash];
-	while (temp != NULL)
-	{
-		if (temp->hashIndex == custID)
-		{
-			cust = temp->customerData;
-			return true;
-		}
-	}
-	return false;
-}*/
+    int hash = custID % size;
+    bool isFound = false;
+
+    Node* temp = NULL;
+
+    if (table[hash]->customerData->getCustomerID() != custID) //look at every element to check check for customerID
+    {
+        for (int i = 0; i < size; i++)
+        {
+            temp = table[i];
+
+            if (temp->customerData->getCustomerID() == custID)
+            {
+                cust = *temp->customerData;
+                isFound = true;
+                break;
+            }
+        }
+    }
+
+    else if (table[hash]->customerData->getCustomerID() == custID) //base case, default single hash location
+    {
+        cust = *table[hash]->customerData;
+        isFound = true;
+    }
+
+    delete temp;
+    temp = NULL;
+
+    return isFound;
+}
 
 
 bool CustomerTable::deleteCustomer(int custID, Customer& cust) //needs update
@@ -319,7 +350,7 @@ ostream& operator<<(ostream& outs, const CustomerTable& rhs)
 {
     for (int i = 0; i < rhs.size; i++)
     {
-        if (rhs.table[i])
+        if (rhs.table[i] != NULL)
         {
             outs << i << " " << rhs.table[i]->customerData->getFName() << " "
                  << rhs.table[i]->customerData->getLName() << " "
