@@ -2,8 +2,8 @@
 // Created by Garrett Singletary on 11/27/16.
 //
 
-#ifndef INC_343A4_ITEM_H
-#define INC_343A4_ITEM_H
+#ifndef ITEM_H
+#define ITEM_H
 
 class Item {
 

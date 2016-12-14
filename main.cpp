@@ -8,7 +8,9 @@ int main() {
 
     LogicController lc;
     lc.buildMovieInventory();
-    lc.displayMovieInventory();
+    lc.buildCustomerTable();
+    //lc.displayMovieInventory();
+    lc.buildCommands();
 
     /*
     ClassicMovie m1(10, "Michael Curtiz", "Casablanca", "Ingrid Bergman", 8, 1942);

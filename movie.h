@@ -2,8 +2,8 @@
 // Created by Garrett Singletary on 11/27/16.
 //
 
-#ifndef INC_343A4_MOVIE_H
-#define INC_343A4_MOVIE_H
+#ifndef MOVIE_H
+#define MOVIE_H
 
 #include "item.h"
 #include <string>

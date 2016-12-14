@@ -2,8 +2,8 @@
 // Created by Garrett Singletary on 11/27/16.
 //
 
-#ifndef INC_343A4_CLASSICMOVIE_H
-#define INC_343A4_CLASSICMOVIE_H
+#ifndef CLASSICMOVIE_H
+#define CLASSICMOVIE_H
 
 #include "movie.h"
 
