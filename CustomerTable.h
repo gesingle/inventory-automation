@@ -50,9 +50,10 @@ protected:
 
 
 	bool isFound(int custID) const;												// Is customer already in table
+	bool isOccupied(int& hash);
 	void deleteTable();															// makeEmpty() helper
 	int performHash(Customer* customer);										// default hash function
-	int performDoubleHash(Customer* customer, int collisions);					// double hash function for collisions
+	int performDoubleHash(Customer* customer, int& collisions);					// double hash function for collisions
 	void increaseTableSize();													// increases table size when customerCount >= size
 };
 

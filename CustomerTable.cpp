@@ -88,7 +88,6 @@ bool CustomerTable::addCustomer(Customer* newCustomer)
 {
 	int collisions = 0;
 	bool isAdded = false;
-	int loopHolder = 0;
 
 	Node* newNode = new Node;
 	newNode->customerData = newCustomer;
@@ -101,33 +100,23 @@ bool CustomerTable::addCustomer(Customer* newCustomer)
 		table[hash] = newNode;
 		customerCount++;
 		isAdded = true;
-		cout << "added new customer in table\n";
 	}
-	else
+	else //table[hash] is occupied
 	{
-		while (table[hash] == NULL)  // this needs to repreat in a while loop, but becomes an infinite loop
-		{
 			collisions++;
-			hash = performDoubleHash(newCustomer, collisions);
-			if (table[hash] == NULL)
-			{
-				newNode->hashIndex = hash; //assigns hashIndex with array element
-				table[hash] = newNode;
-				customerCount++;
-				isAdded = true;
-				cout << "added new customer in table\n";
-				break;
-			}
-		} 
+			hash = performDoubleHash(newCustomer, collisions); //recursively double hashes until an empty hash is found
+
+			newNode->hashIndex = hash; //assigns hashIndex with array element
+			table[hash] = newNode;
+			customerCount++;
+			isAdded = true;
 	}
 
-	if (customerCount / size >= 1.0) //if # of stored customers is greater than or equal to the size, increase the size
+	if ((customerCount / size) >= 1.0) //if # of stored customers is greater than or equal to the size, increase the size
 	{
 		increaseTableSize();
-		cout << "increased table size\n";
 	}
 
-	cout << "returning from addCustomer\n\n";
 	return isAdded;
 }
 
@@ -139,13 +128,32 @@ int CustomerTable::performHash(Customer* newCustomer) //default single hash
 	return (custID % size);
 }
 
-int CustomerTable::performDoubleHash(Customer* newCustomer, int collisions)
+int CustomerTable::performDoubleHash(Customer* newCustomer, int& collisions)
 {
+	bool occupied = true;
 	int custID = newCustomer->getCustomerID();
 	int firstHash = custID % size;
 	int newMod = size - 2;
 	int doubleHash = (newMod - (custID % newMod));
-	return ((firstHash + (collisions * (doubleHash))) % size);
+	doubleHash = ((firstHash + (collisions * (doubleHash))) % size);
+
+	occupied = isOccupied(doubleHash);
+
+	if (occupied == true)
+	{
+		collisions++;
+		return performDoubleHash(newCustomer, collisions);
+	}
+	else
+		return doubleHash;
+}
+
+bool CustomerTable::isOccupied(int& hash)
+{
+	if (table[hash] != NULL)
+		return true;
+	else
+		return false;
 }
 
 
@@ -327,7 +335,7 @@ ostream& operator<<(ostream& outs, const CustomerTable& rhs)
 {
 	for (int i = 0; i < rhs.size; i++)
 	{
-		if (rhs.table[i])
+		if (rhs.table[i] != NULL)
 		{
 			outs << i << " " << rhs.table[i]->customerData->getFName() << " "
 				<< rhs.table[i]->customerData->getLName() << " "
