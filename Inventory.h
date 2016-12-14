@@ -5,8 +5,6 @@
 #ifndef INVENTORY_H
 #define INVENTORY_H
 
-#include "Movie.h"
-#include "MovieTree.h"
 #include "DisplayTransaction.h"
 #include <iostream>
 
@@ -18,7 +16,7 @@ public:
 	Inventory();
 	~Inventory();
 	void makeAction();
-	void displayInventory(MovieTree* movies); //tree should already be in order
+	void displayInventory(ClMovieTree* clTreeRoot, CoMovieTree* coTreeRoot, DrMovieTree* drTreeRoot); //trees should already be in order
 };
 
 #endif

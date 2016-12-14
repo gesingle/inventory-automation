@@ -1,3 +1,7 @@
+//
+// Created by Cody Snow 12/01/2016
+//
+
 #include "Person.h"
 #include <string>
 

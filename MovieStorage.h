@@ -10,8 +10,11 @@
 #include <sstream>
 #include "classicmovie.h"
 #include "comedymovie.h"
-#include "classicmovie.h"
-#include "movietree.h"
+#include "dramamovie.h"
+#include "clmovietree.h"
+#include "comovietree.h"
+#include "drmovietree.h"
+
 
 class MovieStorage {
 
@@ -25,9 +28,9 @@ public:
 	void displayDrMovies();
 
 private:
-	MovieTree* clMovies = NULL;
-	MovieTree* coMovies = NULL;
-	MovieTree* drMovies = NULL;
+	ClMovieTree* clMovies = NULL;
+	CoMovieTree* coMovies = NULL;
+	DrMovieTree* drMovies = NULL;
 };
 
 

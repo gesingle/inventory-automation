@@ -2,16 +2,20 @@
 // Created by Garrett Singletary on 12/12/16.
 //
 
-#ifndef INC_343A4_LOGICCONTROLLER_H
-#define INC_343A4_LOGICCONTROLLER_H
+//
+// Created by Garrett Singletary on 12/12/16.
+//
+
+#ifndef LOGICCONTROLLER_H
+#define LOGICCONTROLLER_H
 
 #include <fstream>
 #include "moviestorage.h"
 #include "classicmovie.h"
 #include "comedymovie.h"
 #include "dramamovie.h"
-#include "CustomerTable.h"
-#include "Customer.h"
+#include "customertable.h"
+#include "customer.h"
 
 class LogicController {
 
@@ -19,12 +23,15 @@ public:
 	LogicController();
 	void buildMovieInventory();
 	void buildCustomerTable();
-
-	void computeTransactions();
+	void displayMovieInventory();
+	void displayCustomerTable();
+	void buildCommands();
 
 private:
 	MovieStorage* movieInventory;
 	CustomerTable* customerTable;
+	void parseBorrowReturn(string, char);
+	void parseHistory(string);
 };
 
 

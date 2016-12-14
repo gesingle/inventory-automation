@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <string>
-#include <list>
+#include <vector>
 
 using namespace std;
 
@@ -31,13 +31,12 @@ public:
 	int getCustomerID() const;
 
 	// Transaction History Functions
-
-	//void displayHistory(ostream& outs) const;
-	//bool addHistory(Transaction* borrowed);
-
+	void displayHistory(ostream& outs) const;
+	bool addHistory(string transaction);  //add a borrow or return transaction string to customer's history
+	
 private:
 	int customerID;
-	list<Transaction*> transHistory;
+	vector<string> transHistory;
 };
 
 

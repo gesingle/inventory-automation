@@ -11,7 +11,17 @@ Transaction::~Transaction()
 {
 }
 
-void Transaction::setMovieTree(MovieTree* movieRoot)
+void Transaction::setClMovieTree(ClMovieTree* movieRoot)
 {
-	movieTree = movieRoot;
+	clMovieTree = movieRoot;
+}
+
+void Transaction::setCoMovieTree(CoMovieTree* movieRoot)
+{
+	coMovieTree = movieRoot;
+}
+
+void Transaction::setDrMovieTree(DrMovieTree* movieRoot)
+{
+	drMovieTree = movieRoot;
 }

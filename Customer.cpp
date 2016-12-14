@@ -53,21 +53,25 @@ int Customer::getCustomerID() const
 	return customerID;
 }
 
+void Customer::displayHistory(ostream& outs) const
+{
+	outs << this << endl;
+}
+
+bool Customer::addHistory(string transaction)
+{
+	transHistory.push_back(transaction);
+	return true;
+}
+
+
 ostream& operator<<(ostream& outs, const Customer& rhs)
 {
 	outs << "Customer: " << rhs.getFName() << " " << rhs.getLName() << "  ID: " << rhs.getCustomerID() << endl;
-	Transaction* temp = rhs.transHistory.front();
-	Transaction* end = rhs.transHistory.back();
-	while (temp != end)
-	{
-		outs << temp << endl;
-		temp++;
-	}
-	outs << temp << endl;
-
-	delete temp;
-	delete end;
-
+	
+	for (int i = 0; i < rhs.transHistory.size(); i++)
+		outs << rhs.transHistory[i] << endl;
+		
 	return outs;
 
 }

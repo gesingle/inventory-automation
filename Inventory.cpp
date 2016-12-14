@@ -14,14 +14,17 @@ Inventory::~Inventory()
 {
 }
 
-void Inventory::makeAction()
+ void Inventory::makeAction()
 {
-	displayInventory(movieTree);
+	displayInventory(clMovieTree, coMovieTree, drMovieTree);
 	cout << "In inventory.makeAction()" << endl;
 }
 
-void Inventory::displayInventory(MovieTree* movies)
+void Inventory::displayInventory(ClMovieTree* clTreeRoot, CoMovieTree* coTreeRoot, DrMovieTree* drTreeRoot)
 {
 	//perform inorder traversal of movies
 	cout << "In inventory.displayInventory()" << endl;
+	clTreeRoot->display();
+	coTreeRoot->display();
+	drTreeRoot->display();
 }

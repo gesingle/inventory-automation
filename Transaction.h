@@ -7,7 +7,9 @@
 
 //#include "Customer.h"
 #include "Movie.h"
-#include "MovieTree.h"
+#include "ClMovietree.h"	
+#include "CoMovieTree.h"
+#include "DrMovieTree.h"
 
 #include <iostream>
 #include <string>
@@ -20,12 +22,16 @@ public:
 	Transaction();
 	~Transaction();
 
-	void setMovieTree(MovieTree* movies);
+	void setClMovieTree(ClMovieTree* movieRoot);
+	void setCoMovieTree(CoMovieTree* movieRoot);
+	void setDrMovieTree(DrMovieTree* movieRoot);
 	virtual void makeAction() = 0;
 
 protected:
 	//virtual void print(std::ostream& outs) const = 0;
-	MovieTree* movieTree;
+	ClMovieTree* clMovieTree;
+	CoMovieTree* coMovieTree;
+	DrMovieTree* drMovieTree;
 };
 
 #endif

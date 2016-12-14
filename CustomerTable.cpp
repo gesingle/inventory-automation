@@ -225,22 +225,40 @@ void CustomerTable::increaseTableSize()
 	//delete newTable?
 }
 
-/*
-bool CustomerTable::retrieveCustomer(int custID, Customer*& cust) //needs update
+
+bool CustomerTable::retrieveCustomer(int custID, Customer& cust) //needs update
 {
 	int hash = custID % size;
-	Node* temp = table[hash];
+	bool isFound = false;
 
-	while (temp != NULL)
+	Node* temp = NULL;
+
+	if (table[hash]->customerData->getCustomerID() != custID) //look at every element to check check for customerID
 	{
-		if (temp->hashIndex == custID)
+		for (int i = 0; i < size; i++)
 		{
-			cust = temp->customerData;
-			return true;
+			temp = table[i];
+
+			if (temp->customerData->getCustomerID() == custID)
+			{
+				cust = *temp->customerData;
+				isFound = true;
+				break;
+			}
 		}
 	}
-	return false;
-}*/
+
+	else if (table[hash]->customerData->getCustomerID() == custID) //base case, default single hash location
+	{
+		cust = *table[hash]->customerData;
+		isFound = true;
+	}
+
+	delete temp;
+	temp = NULL;
+
+	return isFound;
+}
 
 
 bool CustomerTable::deleteCustomer(int custID, Customer& cust) //needs update 

@@ -33,7 +33,7 @@ bool ClassicMovie::operator<(const ClassicMovie& clmovie) {
 
 bool ClassicMovie::operator>(const ClassicMovie& clmovie) {
 
-	if (this->title > clmovie.getTitle()) {
+	if (this->releaseYear > clmovie.getYear()) {
 		return true;
 	}
 

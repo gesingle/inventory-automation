@@ -10,3 +10,5 @@
 8000 Wacky Wally
 5000 Frog Freddie
 2000 Duck Donald
+0053 Snow Cody
+0106 Singletary Garrett

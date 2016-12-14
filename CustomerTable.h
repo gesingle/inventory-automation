@@ -28,12 +28,11 @@ public:
 	void makeEmpty();															//delete all Customers from table
 
 	bool addCustomer(Customer* customer);										//add a customer to the table
-	bool deleteCustomer(int location, Customer& customer);
-
+	bool deleteCustomer(int custID, Customer& customer);
+	bool retrieveCustomer(int custID, Customer& customer);						//retrieve the customer with specified customerID
 	void displayCustomers();
 
-	// unnecessary functions
-	//bool retrieveCustomer(int location, Customer*& customer); //retrieve the customer at specified location
+	
 	//CustomerTable& operator=(const CustomerTable& copyTable);
 
 protected:

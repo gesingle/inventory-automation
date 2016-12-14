@@ -24,7 +24,7 @@ public:
 	TransactionFactory();
 	~TransactionFactory();
 
-	static Transaction* construct(std::istream& ins, MovieTree* movieTree, CustomerTable& customers); //will be implemented differently, file will already be parsed
+	static Transaction* construct(std::istream& ins, ClMovieTree* movieTree, CustomerTable& customers); //will be implemented differently, file will already be parsed
 
 private:
 	Inventory* createInventoryTransaction();

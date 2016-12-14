@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 LogicController::LogicController() {
 
@@ -14,7 +15,7 @@ LogicController::LogicController() {
 void LogicController::buildMovieInventory() {
 
 	movieInventory = new MovieStorage();
-
+	// "/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4movies.txt"
 	ifstream infile("data4movies.txt");
 	if (!infile) {
 		cout << "File could not be opened." << endl;
@@ -23,7 +24,7 @@ void LogicController::buildMovieInventory() {
 	string line;
 	char genre;
 
-	while (getline(infile, line)) {
+	while (!infile.eof()) {
 
 		getline(infile, line);
 		stringstream ss(line);
@@ -40,21 +41,23 @@ void LogicController::buildMovieInventory() {
 		case 'C':
 			movieInventory->addClMovie(line);
 			break;
+		default:
+			cout << "Genre not valid" << endl;
+			break;
 		}
 	}
-
-	movieInventory->displayClMovies();
 	infile.close();
-
 }
 
-//
-// Created by Cody Snow on 12/13/2016
-//
-void LogicController::buildCustomerTable()
-{
+void LogicController::displayMovieInventory() {
+	movieInventory->displayCoMovies();
+	movieInventory->displayDrMovies();
+	movieInventory->displayClMovies();
+}
+
+void LogicController::buildCustomerTable() {
 	customerTable = new CustomerTable();
-	
+
 	ifstream custFile("data4customers.txt");
 
 	if (!custFile)
@@ -62,7 +65,7 @@ void LogicController::buildCustomerTable()
 
 	string line;
 	Customer* customer;
-	
+
 	while (!custFile.eof())
 	{
 		int custID;
@@ -72,14 +75,141 @@ void LogicController::buildCustomerTable()
 		custFile >> last;
 		custFile >> first;
 
-		if (!(custID < 0000 || custID > 9999)) //check for valid customerID
+		if (!(custID < 0000 || custID > 9999))
 		{
 			customer = new Customer(first, last, custID);
 			customerTable->addCustomer(customer);
 		}
 	}
-	
-	customerTable->displayCustomers();
+
 	custFile.close();
-	
+}
+
+
+void LogicController::displayCustomerTable() {
+	customerTable->displayCustomers();
+}
+
+
+void LogicController::buildCommands() {
+	// "/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4commands.txt"
+	ifstream infile("data4commands.txt");
+	if (!infile) {
+		cout << "File could not be opened." << endl;
+	}
+
+	string line;
+
+	while (!infile.eof()) {
+
+		getline(infile, line);
+		stringstream ss(line);
+
+		char command;
+		ss >> command;
+
+		switch (command) {
+		case 'B':
+			parseBorrowReturn(line, command);
+			break;
+		case 'R':
+			parseBorrowReturn(line, command);
+			break;
+		case 'H':
+			parseHistory(line);
+			break;
+		case 'I':
+			//displayMovieInventory();
+			break;
+		default:
+			cout << "Invalid Command" << endl;
+			break;
+		}
+	}
+	infile.close();
+}
+
+void LogicController::parseBorrowReturn(string txtLine, char command) {
+
+	stringstream ss(txtLine);
+
+	ss.ignore();
+	ss.ignore();
+
+	string custIDStr = "";
+	int custID;
+	while (ss.peek() != ' ') {
+		custIDStr += ss.get();
+	}
+	ss.ignore();
+	custID = stoi(custIDStr);
+
+	char movieType;
+	ss >> movieType;
+	ss.ignore();
+
+	char genre;
+	ss >> genre;
+	ss.ignore();
+
+	string title = "";
+	string actor = "";
+	string director = "";
+	string monthStr = "";
+	int month;
+	string yearStr = "";
+	int year;
+
+	switch (genre) {
+	case 'F':
+		while (ss.peek() != ',') {
+			title += ss.get();
+		}
+		ss.ignore();
+		ss.ignore();
+		for (int i = 0; i < 4; i++) {
+			yearStr += ss.get();
+		}
+		year = stoi(yearStr);
+		break;
+	case 'D':
+		while (ss.peek() != ',') {
+			director += ss.get();
+		}
+		ss.ignore();
+		ss.ignore();
+		while (ss.peek() != ',') {
+			title += ss.get();
+		}
+		break;
+	case 'C':
+		ss >> monthStr;
+		ss.ignore();
+		for (int i = 0; i < 4; i++) {
+			yearStr += ss.get();
+		}
+		ss.ignore();
+		while (ss.peek() != EOF) {
+			actor += ss.get();
+		}
+		month = stoi(monthStr);
+		year = stoi(yearStr);
+		break;
+	default:
+		cout << "Invalid genre" << endl;
+		break;
+	}
+}
+
+void LogicController::parseHistory(string line) {
+
+	stringstream ss(line);
+	ss.ignore();
+
+	string custIDStr = "";
+	int custID;
+	for (int i = 0; i < 4; i++) {
+		custIDStr += ss.get();
+	}
+	custID = stoi(custIDStr);
 }
