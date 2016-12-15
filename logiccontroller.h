@@ -30,6 +30,7 @@ public:
     ~LogicController();
     void buildMovieInventory();
     void buildCustomerTable();
+    void displayCustomerTable();
     void displayMovieInventory();
     void buildCommands();
 

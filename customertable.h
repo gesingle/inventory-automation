@@ -1,16 +1,27 @@
+//*****************************************************************************
+// CustomerTable.h
+// CSS 343 Assignment 4 Implementation
+// Garrett Singletary, Cody Snow
+// Created: December 12, 2016
+// Last Modified: December 14, 2016
 //
-// Created by Cody Snow on 12/12/2016
-// Last Modified 12/13/2016 -> adjusted table Nodes for double hashing
-//
+// CustomerTable implements a hash table to store Customer objects. The table
+// relies on the customerID of each Customer object to perform a hash and
+// allocate a Customer to the correct location.
+// This table implements double hashing to handle collisions.
+//******************************************************************************
+
+//-------------------------------------------------------------------------------
+// Assumptions
+// Every customer has a unique customerID
+// Double hashing will eventually result in a valid storage location
+//-------------------------------------------------------------------------------
 
 #ifndef CUSTOMERTABLE_H
 #define	CUSTOMERTABLE_H
 #include "customer.h"
 
-
-//const int TABLESIZE = 20011; there is no point using a hash table so large that it would give every customer ID a unique spot 0-9999
-
-const int TABLESIZE_SMALL = 51;													//semi-large prime table size. table grows if necessary
+const int TABLESIZE_SMALL = 51;													//semi-large prime table size. size grows if necessary
 
 class CustomerTable
 {
@@ -28,12 +39,11 @@ public:
     void makeEmpty();															//delete all Customers from table
 
     bool addCustomer(Customer* customer);										//add a customer to the table
-    bool deleteCustomer(int custID, Customer& customer);
+    bool deleteCustomer(int custID, Customer*& customer);
     bool retrieveCustomer(int custID, Customer*& customer);						//retrieve the customer with specified customerID
     void displayCustomers();
 
-
-    //CustomerTable& operator=(const CustomerTable& copyTable);
+    CustomerTable& operator=(const CustomerTable& copyTable);					//overloaded = operator to assign one table to another table
 
 protected:
     struct Node

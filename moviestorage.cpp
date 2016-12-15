@@ -20,6 +20,15 @@ MovieStorage::MovieStorage() {
     drMovies = new DrMovieTree();
 }
 
+// ------------------------------------------------ ~MovieStorage ------------------------------------------------------
+//  Destructor
+// ---------------------------------------------------------------------------------------------------------------------
+MovieStorage::~MovieStorage() {
+    delete clMovies;
+    delete coMovies;
+    delete drMovies;
+
+}
 // ------------------------------------------------ addClMovie ---------------------------------------------------------
 //  Parses movie info and adds it to classic tree
 // ---------------------------------------------------------------------------------------------------------------------
@@ -228,6 +237,8 @@ CoMovieTree *MovieStorage::getCoMovies() {
 DrMovieTree *MovieStorage::getDrMovies() {
     return drMovies;
 }
+
+
 
 
 

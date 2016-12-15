@@ -15,6 +15,13 @@
 CoMovieTree::CoMovieTree() {
 }
 
+// ------------------------------------------------ ~CoMovieTree -------------------------------------------------------
+//  Destructor
+// ---------------------------------------------------------------------------------------------------------------------
+CoMovieTree::~CoMovieTree() {
+    makeEmpty();
+}
+
 // ------------------------------------------------ insert -------------------------------------------------------------
 //  Inserts a movie into the tree
 // ---------------------------------------------------------------------------------------------------------------------
@@ -108,4 +115,31 @@ bool CoMovieTree::retrieve(const ComedyMovie& movie, ComedyMovie*& moviePtr) con
 
     return true;
 }
+
+// ------------------------------------------------ makeEmpty ----------------------------------------------------------
+//  Deletes all Nodes and NodeData in the tree
+// ---------------------------------------------------------------------------------------------------------------------
+void CoMovieTree::makeEmpty() {
+
+    deleteNode(root);
+}
+
+// ------------------------------------------------ deleteNode ---------------------------------------------------------
+//  Helper for makeEmpty - recursively deletes all Nodes and Data in the tree
+// ---------------------------------------------------------------------------------------------------------------------
+void CoMovieTree::deleteNode(MovieNode* &node) {
+
+    if (node != NULL) {
+        // delete both children
+        deleteNode(node->left);
+        deleteNode(node->right);
+        // delete NodeData
+        delete node->movie;
+        node->movie = NULL;
+        // delete Node
+        delete node;
+        node = NULL;
+    }
+}
+
 

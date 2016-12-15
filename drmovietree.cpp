@@ -16,6 +16,13 @@ DrMovieTree::DrMovieTree() {
 
 }
 
+// ------------------------------------------------ ~DrMovieTree -------------------------------------------------------
+//  Destructor
+// ---------------------------------------------------------------------------------------------------------------------
+DrMovieTree::~DrMovieTree() {
+    makeEmpty();
+}
+
 // ------------------------------------------------ insert -------------------------------------------------------------
 //  Inserts a movie into the tree
 // ---------------------------------------------------------------------------------------------------------------------
@@ -108,4 +115,30 @@ bool DrMovieTree::retrieve(const DramaMovie& movie, DramaMovie*& moviePtr) const
     }
 
     return true;
+}
+
+// ------------------------------------------------ makeEmpty ----------------------------------------------------------
+//  Deletes all Nodes and NodeData in the tree
+// ---------------------------------------------------------------------------------------------------------------------
+void DrMovieTree::makeEmpty() {
+
+    deleteNode(root);
+}
+
+// ------------------------------------------------ deleteNode ---------------------------------------------------------
+//  Helper for makeEmpty - recursively deletes all Nodes and Data in the tree
+// ---------------------------------------------------------------------------------------------------------------------
+void DrMovieTree::deleteNode(MovieNode* &node) {
+
+    if (node != NULL) {
+        // delete both children
+        deleteNode(node->left);
+        deleteNode(node->right);
+        // delete NodeData
+        delete node->movie;
+        node->movie = NULL;
+        // delete Node
+        delete node;
+        node = NULL;
+    }
 }

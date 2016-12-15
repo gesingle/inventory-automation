@@ -26,6 +26,7 @@ class MovieStorage {
 
 public:
     MovieStorage();
+    ~MovieStorage();
     void addClMovie(string);
     void addCoMovie(string);
     void addDrMovie(string);

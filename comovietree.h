@@ -17,6 +17,7 @@ class CoMovieTree {
 
 public:
     CoMovieTree();
+    ~CoMovieTree();
     bool insert(ComedyMovie* movie);
     void display() const;
     bool retrieve(const ComedyMovie&, ComedyMovie* &) const;
@@ -29,6 +30,8 @@ private:
     };
     MovieNode* root = NULL;	    // root of the tree
     void displayHelper(MovieNode*) const;
+    void makeEmpty();
+    void deleteNode(MovieNode*&);
 };
 
 

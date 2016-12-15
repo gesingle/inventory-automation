@@ -17,6 +17,7 @@ class DrMovieTree {
 
 public:
     DrMovieTree();
+    ~DrMovieTree();
     bool insert(DramaMovie* movie);
     void display() const;
     bool retrieve(const DramaMovie&, DramaMovie* &) const;
@@ -29,6 +30,8 @@ private:
     };
     MovieNode* root = NULL;	    // root of the tree
     void displayHelper(MovieNode*) const;
+    void makeEmpty();
+    void deleteNode(MovieNode*&);
 };
 
 

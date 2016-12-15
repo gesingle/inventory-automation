@@ -17,6 +17,7 @@ class ClMovieTree {
 
 public:
     ClMovieTree();
+    ~ClMovieTree();
     bool insert(ClassicMovie* movie);
     void display() const;
     bool retrieve(const ClassicMovie&, ClassicMovie* &) const;
@@ -29,6 +30,8 @@ private:
     };
     MovieNode* root = NULL;	    // root of the tree
     void displayHelper(MovieNode*) const;
+    void makeEmpty();
+    void deleteNode(MovieNode*&);
 };
 
 

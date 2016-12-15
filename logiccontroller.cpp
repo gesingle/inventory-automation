@@ -41,7 +41,7 @@ void LogicController::buildMovieInventory() {
 
     movieInventory = new MovieStorage();
     // "/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4movies.txt"
-    ifstream infile("/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4movies.txt");
+    ifstream infile("data4movies.txt");
     if (!infile) {
         cout << "File could not be opened." << endl;
     }
@@ -97,7 +97,7 @@ void LogicController::displayMovieInventory() {
 void LogicController::buildCustomerTable() {
     customerTable = new CustomerTable();
     // /Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/
-    ifstream custFile("/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4customers.txt");
+    ifstream custFile("data4customers.txt");
 
     if (!custFile)
         cout << "ERROR: Customer file not found." << endl;
@@ -128,12 +128,21 @@ void LogicController::buildCustomerTable() {
     custFile.close();
 }
 
+// --------------------------------------------- displayCustomerTable --------------------------------------------------
+//  Displays data for all Customers in CustomerTable
+// ---------------------------------------------------------------------------------------------------------------------
+void LogicController::displayCustomerTable()
+{
+    cout << "Displaying all customers:\n";
+    customerTable->displayCustomers();
+}
+
 // ------------------------------------------------ buildCommands ------------------------------------------------------
 //  Reads in a series of commands from a .txt file and executes them
 // ---------------------------------------------------------------------------------------------------------------------
 void LogicController::buildCommands() {
     // "/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4commands.txt"
-    ifstream infile("/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4commands.txt");
+    ifstream infile("data4commands.txt");
     if (!infile) {
         cout << "File could not be opened." << endl;
     }
