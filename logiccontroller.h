@@ -1,6 +1,16 @@
-//
-// Created by Garrett Singletary on 12/12/16.
-//
+/* ------------------------------------------------ logiccontroller.cpp ------------------------------------------------
+ Created by Garrett Singletary and Cody Snow on 12/01/2016
+ CSS343 Assignment #4
+ Date of Last Modification: 12/14/2016
+ -----------------------------------------------------------------------------------------------------------------------
+ This class implements the primary business logic for the movie store inventory system.
+ -----------------------------------------------------------------------------------------------------------------------
+Assumptions:
+    1. Invalid commands, customers, and movies are handled as per the assignment write up.
+    2. The supplied txt files are formatted correctly
+    3. C++ compiler is set to C++11
+ -----------------------------------------------------------------------------------------------------------------------
+*/
 
 #ifndef LOGICCONTROLLER_H
 #define LOGICCONTROLLER_H
@@ -23,7 +33,9 @@ public:
     void buildCommands();
 
 private:
+    // holds all movies
     MovieStorage* movieInventory;
+    // holds all customers
     CustomerTable* customerTable;
     void parseBorrowReturn(string, char);
     void parseHistory(string);

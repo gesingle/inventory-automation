@@ -1,6 +1,12 @@
-//
-// Created by Garrett Singletary on 12/12/16.
-//
+/* ------------------------------------------------ moviestorage.h -----------------------------------------------------
+ Created by Garrett Singletary and Cody Snow on 12/01/2016
+ CSS343 Assignment #4
+ Date of Last Modification: 12/14/2016
+ -----------------------------------------------------------------------------------------------------------------------
+ This class holds binary search trees for the various movie genres with functionality to add movies as well as to get
+ and display the individual trees
+ -----------------------------------------------------------------------------------------------------------------------
+*/
 
 #ifndef MOVIESTORAGE_H
 #define MOVIESTORAGE_H

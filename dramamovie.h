@@ -1,6 +1,11 @@
-//
-// Created by Garrett Singletary on 11/27/16.
-//
+/* ------------------------------------------------ dramamovie.h -------------------------------------------------------
+ Created by Garrett Singletary and Cody Snow on 12/01/2016
+ CSS343 Assignment #4
+ Date of Last Modification: 12/14/2016
+ -----------------------------------------------------------------------------------------------------------------------
+ This class defines the functionality of a classic movie.
+ -----------------------------------------------------------------------------------------------------------------------
+*/
 
 #ifndef DRAMAMOVIE_H
 #define DRAMAMOVIE_H

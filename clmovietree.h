@@ -1,6 +1,11 @@
-//
-// Created by Garrett Singletary on 12/12/16.
-//
+/* ------------------------------------------------ clmovietree.h ------------------------------------------------------
+ Created by Garrett Singletary and Cody Snow on 12/01/2016
+ CSS343 Assignment #4
+ Date of Last Modification: 12/14/2016
+ -----------------------------------------------------------------------------------------------------------------------
+ This class implements a binary search tree to hold classic movies.
+ -----------------------------------------------------------------------------------------------------------------------
+*/
 
 #ifndef CLMOVIETREE_H
 #define CLMOVIETREE_H

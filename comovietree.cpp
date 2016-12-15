@@ -1,12 +1,23 @@
-//
-// Created by Garrett Singletary on 12/13/16.
-//
+/* ------------------------------------------------ comovietree.cpp ----------------------------------------------------
+ Created by Garrett Singletary and Cody Snow on 12/01/2016
+ CSS343 Assignment #4
+ Date of Last Modification: 12/14/2016
+ -----------------------------------------------------------------------------------------------------------------------
+ This class implements a binary search tree to hold comedy movies.
+ -----------------------------------------------------------------------------------------------------------------------
+*/
 
 #include "comovietree.h"
 
+// ------------------------------------------------ CoMovieTree --------------------------------------------------------
+//  Constructor
+// ---------------------------------------------------------------------------------------------------------------------
 CoMovieTree::CoMovieTree() {
 }
 
+// ------------------------------------------------ insert -------------------------------------------------------------
+//  Inserts a movie into the tree
+// ---------------------------------------------------------------------------------------------------------------------
 bool CoMovieTree::insert(ComedyMovie *m) {
 
     // initialize root if tree is empty
@@ -46,6 +57,9 @@ bool CoMovieTree::insert(ComedyMovie *m) {
     return false;
 }
 
+// ------------------------------------------------ displayHelper ------------------------------------------------------
+//  Helper function for displaying the movie tree using inorder traversal
+// ---------------------------------------------------------------------------------------------------------------------
 void CoMovieTree::displayHelper(MovieNode* node) const{
 
     if(node != NULL){
@@ -55,10 +69,16 @@ void CoMovieTree::displayHelper(MovieNode* node) const{
     }
 }
 
+// ------------------------------------------------ display ------------------------------------------------------------
+//  Displays all the movies in the tree
+// ---------------------------------------------------------------------------------------------------------------------
 void CoMovieTree::display() const {
     displayHelper(this->root);
 }
 
+// ------------------------------------------------ retrieve -----------------------------------------------------------
+//  Returns a pointer to the movie being searched for if it exist
+// ---------------------------------------------------------------------------------------------------------------------
 bool CoMovieTree::retrieve(const ComedyMovie& movie, ComedyMovie*& moviePtr) const {
 
     // temp node for tree traversal

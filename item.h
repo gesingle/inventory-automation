@@ -1,6 +1,11 @@
-//
-// Created by Garrett Singletary on 11/27/16.
-//
+/* ------------------------------------------------ item.h -------------------------------------------------------------
+ Created by Garrett Singletary and Cody Snow on 12/01/2016
+ CSS343 Assignment #4
+ Date of Last Modification: 12/14/2016
+ -----------------------------------------------------------------------------------------------------------------------
+ This class is an abstract class for items the movie store may have.
+ -----------------------------------------------------------------------------------------------------------------------
+*/
 
 #ifndef ITEM_H
 #define ITEM_H

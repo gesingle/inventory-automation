@@ -1,13 +1,24 @@
-//
-// Created by Garrett Singletary on 12/12/16.
-//
+/* ------------------------------------------------ clmovietree.cpp ----------------------------------------------------
+ Created by Garrett Singletary and Cody Snow on 12/01/2016
+ CSS343 Assignment #4
+ Date of Last Modification: 12/14/2016
+ -----------------------------------------------------------------------------------------------------------------------
+ This class implements a binary search tree to hold comedy movies.
+ -----------------------------------------------------------------------------------------------------------------------
+*/
 
 #include "clmovietree.h"
 
+// ------------------------------------------------ ClMovieTree --------------------------------------------------------
+//  Constructor
+// ---------------------------------------------------------------------------------------------------------------------
 ClMovieTree::ClMovieTree() {
 
 }
 
+// ------------------------------------------------ insert -------------------------------------------------------------
+//  Inserts a movie into the tree
+// ---------------------------------------------------------------------------------------------------------------------
 bool ClMovieTree::insert(ClassicMovie *m) {
 
     // initialize root if tree is empty
@@ -47,6 +58,9 @@ bool ClMovieTree::insert(ClassicMovie *m) {
     return false;
 }
 
+// ------------------------------------------------ displayHelper ------------------------------------------------------
+//  Helper function for displaying the movie tree using inorder traversal
+// ---------------------------------------------------------------------------------------------------------------------
 void ClMovieTree::displayHelper(MovieNode* node) const{
 
     if(node != NULL){
@@ -56,10 +70,16 @@ void ClMovieTree::displayHelper(MovieNode* node) const{
     }
 }
 
+// ------------------------------------------------ display ------------------------------------------------------------
+//  Displays all the movies in the tree
+// ---------------------------------------------------------------------------------------------------------------------
 void ClMovieTree::display() const {
     displayHelper(this->root);
 }
 
+// ------------------------------------------------ retrieve -----------------------------------------------------------
+//  Returns a pointer to the movie being searched for if it exist
+// ---------------------------------------------------------------------------------------------------------------------
 bool ClMovieTree::retrieve(const ClassicMovie& movie, ClassicMovie*& moviePtr) const {
     // temp node for tree traversal
     MovieNode* current = root;

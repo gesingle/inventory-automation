@@ -1,3 +1,17 @@
+/* ------------------------------------------------ main.cpp -----------------------------------------------------------
+ Created by Garrett Singletary and Cody Snow on 12/01/2016
+ CSS343 Assignment #4
+ Date of Last Modification: 12/14/2016
+ -----------------------------------------------------------------------------------------------------------------------
+ Runnable for movie inventory system.
+ -----------------------------------------------------------------------------------------------------------------------
+Assumptions:
+    1. Invalid commands, customers, and movies are handled as per the assignment write up.
+    2. The supplied txt files are formatted correctly
+    3. C++ compiler is set to C++11
+ -----------------------------------------------------------------------------------------------------------------------
+*/
+
 #include <iostream>
 #include "classicmovie.h"
 #include "comedymovie.h"
@@ -8,20 +22,5 @@ int main() {
 
     LogicController lc;
     lc.buildCommands();
-
-
-    /*
-    ClassicMovie m1(10, "Michael Curtiz", "Casablanca", "Ingrid Bergman", 8, 1942);
-    ClassicMovie m2(10, "Michael Curtiz", "Casablanca", "Humphrey Bogart", 8, 1942);
-    ClassicMovie m3(10, "Michael Curtiz", "Casablanca", "Ingrid Bergman", 8, 1942);
-    cout << "m1 < m2 " << (m1 < m2) << endl;
-    cout << "m1 > m2 " << (m1 > m2) << endl;
-    cout << "m1 == m2 " << (m1 == m2) << endl;
-    cout << "m1 < m3 " << (m1 < m3) << endl;
-    cout << "m1 > m3 " << (m1 > m3) << endl;
-    cout << "m1 == m3 " << (m1 == m3) << endl;
-*/
-
-
     return 0;
 }
