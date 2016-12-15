@@ -77,7 +77,6 @@ bool Customer::hasBorrowed(string title)
 
 ostream& operator<<(ostream& outs, const Customer& rhs)
 {
-    outs << endl;
     outs << "Customer: " << rhs.getFName() << " " << rhs.getLName() << "  ID: " << rhs.getCustomerID() << endl;
     for (unsigned int i = 0; i < rhs.transHistory.size(); i++)
         outs << "   " << rhs.transHistory[i] << endl;

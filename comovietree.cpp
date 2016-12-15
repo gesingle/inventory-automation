@@ -50,7 +50,7 @@ void CoMovieTree::displayHelper(MovieNode* node) const{
 
     if(node != NULL){
         displayHelper(node->left);
-        cout << node->movie->getStock() << " " << node->movie->getTitle() << " " << node->movie->getYear() << endl;
+        cout << "      " << node->movie->getStock() << " " << node->movie->getTitle() << " " << node->movie->getYear() << endl;
         displayHelper(node->right);
     }
 }

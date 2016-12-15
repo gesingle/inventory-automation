@@ -51,7 +51,7 @@ void DrMovieTree::displayHelper(MovieNode* node) const{
 
     if(node != NULL){
         displayHelper(node->left);
-        cout << node->movie->getStock() << " " << node->movie->getDirector() << " " << node->movie->getTitle() << endl;
+        cout << "      " << node->movie->getStock() << " " << node->movie->getDirector() << " " << node->movie->getTitle() << endl;
         displayHelper(node->right);
     }
 }

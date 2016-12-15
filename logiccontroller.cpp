@@ -28,7 +28,7 @@ void LogicController::buildMovieInventory() {
 
     movieInventory = new MovieStorage();
     // "/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4movies.txt"
-    ifstream infile("/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4movies.txt");
+    ifstream infile("data4movies.txt");
     if (!infile) {
         cout << "File could not be opened." << endl;
     }
@@ -54,7 +54,6 @@ void LogicController::buildMovieInventory() {
                 movieInventory->addClMovie(line);
                 break;
             default:
-                cout << "genre = " << genre << endl;
                 cout << "Genre not valid" << endl;
                 break;
         }
@@ -63,15 +62,20 @@ void LogicController::buildMovieInventory() {
 }
 
 void LogicController::displayMovieInventory() {
+    cout << endl << "Current Inventory: " << endl;
+    cout << "   Comedies: " << endl;
     movieInventory->displayCoMovies();
+    cout << "   Dramas: " << endl;
     movieInventory->displayDrMovies();
+    cout << "   Classics: " << endl;
     movieInventory->displayClMovies();
+    cout << endl;
 }
 
 void LogicController::buildCustomerTable() {
     customerTable = new CustomerTable();
     // /Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/
-    ifstream custFile("/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4customers.txt");
+    ifstream custFile("data4customers.txt");
 
     if (!custFile)
         cout << "ERROR: Customer file not found." << endl;
@@ -100,7 +104,7 @@ void LogicController::buildCustomerTable() {
 
 void LogicController::buildCommands() {
     // "/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4commands.txt"
-    ifstream infile("/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4commands.txt");
+    ifstream infile("data4commands.txt");
     if (!infile) {
         cout << "File could not be opened." << endl;
     }
@@ -178,7 +182,12 @@ void LogicController::parseBorrowReturn(string txtLine, char command) {
                 yearStr += ss.get();
             }
             year = stoi(yearStr);
-            borrowCoMovie(title, year, custID);
+            if(command == 'B') {
+                borrowCoMovie(title, year, custID);
+            }
+            else if(command == 'R'){
+                returnCoMovie(title, year, custID);
+            }
             break;
         case 'D' :
             while(ss.peek() != ','){
@@ -189,7 +198,12 @@ void LogicController::parseBorrowReturn(string txtLine, char command) {
             while(ss.peek() != ','){
                 title += ss.get();
             }
-            borrowDrMovie(director, title, custID);
+            if(command == 'B') {
+                borrowDrMovie(director, title, custID);
+            }
+            else if(command == 'R'){
+                returnDrMovie(director, title, custID);
+            }
             break;
         case 'C' :
             ss >> monthStr;
@@ -201,9 +215,15 @@ void LogicController::parseBorrowReturn(string txtLine, char command) {
             while(ss.peek() != EOF){
                 actor += ss.get();
             }
+            actor = actor.substr(0, actor.size()-1);
             month = stoi(monthStr);
             year = stoi(yearStr);
-            borrowClMovie(month, year, actor, custID);
+            if(command == 'B') {
+                borrowClMovie(month, year, actor, custID);
+            }
+            else if(command == 'R'){
+                returnClMovie(month, year, actor, custID);
+            }
             break;
         default :
             cout << "Invalid genre" << endl;
@@ -238,7 +258,7 @@ void LogicController::borrowClMovie(int month, int year, string actor, int custI
         if (found) {
             if (moviePtr->getStock() > 0) {
                 moviePtr->setStock(moviePtr->getStock() - 1);
-                string customerBorrow = "B D C " + to_string(month) + ", " + to_string(year) + actor;
+                string customerBorrow = "B D C " + to_string(month) + ", " + to_string(year) + ", " + actor;
                 borrowCustomer->addHistory(customerBorrow);
             } else {
                 cout << "Movie is out of stock" << endl;
@@ -334,7 +354,6 @@ void LogicController::returnCoMovie(string title, int year, int custID) {
                     moviePtr->setStock(moviePtr->getStock() + 1);
                     string customerReturn = "R D F " + title + ", " + to_string(year);
                     returnCustomer->addHistory(customerReturn);
-                    cout << "comedy returned" << endl;
                 }
 
                 else

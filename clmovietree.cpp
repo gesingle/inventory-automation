@@ -51,7 +51,7 @@ void ClMovieTree::displayHelper(MovieNode* node) const{
 
     if(node != NULL){
         displayHelper(node->left);
-        cout << node->movie->getStock() << " " << node->movie->getYear() << " " << node->movie->getActor() << endl;
+        cout << "      " << node->movie->getStock() << " " << node->movie->getYear() << " " << node->movie->getActor() << endl;
         displayHelper(node->right);
     }
 }
@@ -61,7 +61,6 @@ void ClMovieTree::display() const {
 }
 
 bool ClMovieTree::retrieve(const ClassicMovie& movie, ClassicMovie*& moviePtr) const {
-
     // temp node for tree traversal
     MovieNode* current = root;
     bool found = false;
@@ -82,7 +81,6 @@ bool ClMovieTree::retrieve(const ClassicMovie& movie, ClassicMovie*& moviePtr) c
                 current = current->right;
         }
         else {
-            cout << "found" << endl;
             moviePtr = current->movie;
             found = true;
         }
