@@ -1,12 +1,26 @@
+//*****************************************************************************
+// Customer.h
+// CSS 343 Assignment 4 Implementation
+// Garrett Singletary, Cody Snow
+// Created: December 01, 2016
+// Last Modified: December 14, 2016
 //
-// Created by Cody Snow on 12/01/2016
-//
+// Customer is a subclass of the Person class. Customer inherits all members
+// of Parent and implements functionality for Customer specific data.
+// A Customer contains additional members customerID and transHistory. 
+// customerID is a unique integer value that may be assigned to the Customer.
+// transHistory tracks associated transactions with the specified Customer.
+//******************************************************************************
+
+//-------------------------------------------------------------------------------
+// Assumptions
+// Every customer has a unique customerID
+//-------------------------------------------------------------------------------
 
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
 #include "Person.h"
-#include "Transaction.h"
 
 #include <iostream>
 #include <string>
@@ -33,7 +47,7 @@ public:
 	// Transaction History Functions
 	void displayHistory() const;
 	bool addHistory(string transaction);  //add a borrow or return transaction string to customer's history
-	bool hasBorrowed(string title);
+	bool hasBorrowed(string transaction); //compare the transaction string to transactions in customer's history
 	
 private:
 	int customerID;

@@ -1,10 +1,24 @@
-//		
-// Created by Cody Snow on 12/12/16.
-// Last Modified 12/13/16 (added operator<< and display function, implemented double hash
+//*****************************************************************************
+// CustomerTable.h
+// CSS 343 Assignment 4 Implementation
+// Garrett Singletary, Cody Snow
+// Created: December 12, 2016
+// Last Modified: December 14, 2016
 //
+// CustomerTable implements a hash table to store Customer objects. The table
+// relies on the customerID of each Customer object to perform a hash and 
+// allocate a Customer to the correct location.
+// This table implements double hashing to handle collisions.
+//******************************************************************************
 
 #include "CustomerTable.h"
 
+
+//-------------------------------------------------------------------------------
+// constructor
+// Builds a CustomerTable with default size TABLESIZE_SMALL, and assigns 
+// every node to NULL.
+//-------------------------------------------------------------------------------
 CustomerTable::CustomerTable()
 {
 	size = TABLESIZE_SMALL; //default size
@@ -12,9 +26,17 @@ CustomerTable::CustomerTable()
 
 	for (int i = 0; i < size; i++)
 		table[i] = NULL;
+	customerCount = 0;
 }
 
-CustomerTable::CustomerTable(const CustomerTable& copy) //copy constructor, make a deep copy of 'copy' table
+
+//-------------------------------------------------------------------------------
+// copy constructor
+// Builds a new CustomerTable with default size TABLESIZE_SMALL, and assigns
+// every node to NULL. Makes use of overloaded = operator to set new 
+// CustomerTable equal to the provided copy CustomerTable.
+//-------------------------------------------------------------------------------
+CustomerTable::CustomerTable(const CustomerTable& copy) 
 {
 	table = NULL;
 	size = TABLESIZE_SMALL;
@@ -24,24 +46,46 @@ CustomerTable::CustomerTable(const CustomerTable& copy) //copy constructor, make
 	for (int i = 0; i < size; i++)
 		table[i] = NULL;
 
-	*this = copy;
+	*this = copy; //overloaded = 
 }
 
+
+//-------------------------------------------------------------------------------
+// destructor
+// Uses helper function deleteTable() to delete CustomerTable and set to NULL
+//-------------------------------------------------------------------------------
 CustomerTable::~CustomerTable()
 {
 	deleteTable();
 }
 
+
+//-------------------------------------------------------------------------------
+// getSize
+// returns an int value containing the size of the associated CustomerTable
+//-------------------------------------------------------------------------------
 int CustomerTable::getSize() const
 {
 	return size;
 }
 
+
+//-------------------------------------------------------------------------------
+// getCustomerCount
+// returns a double value containing the number of Customers stored in the
+// current CustomerTable.
+//-------------------------------------------------------------------------------
 double CustomerTable::getCustomerCount() const
 {
 	return customerCount;
 }
 
+
+//-------------------------------------------------------------------------------
+// isEmpty
+// returns a boolean value indicating if the CustomerTable is empty.
+// CustomerTable is empty if customerCount is zero.
+//-------------------------------------------------------------------------------
 bool CustomerTable::isEmpty() const
 {
 	if (customerCount == 0)
@@ -50,7 +94,12 @@ bool CustomerTable::isEmpty() const
 		return false;
 }
 
-
+//-------------------------------------------------------------------------------
+// makeEmpty
+// utilizes helper function deleteTable() to delete all Customers and set the
+// CustomerTable to NULL. The CustomerTable is then reset to default size and
+// all elements are assigned to NULL.
+//-------------------------------------------------------------------------------
 void CustomerTable::makeEmpty()
 {
 	deleteTable();
@@ -63,6 +112,12 @@ void CustomerTable::makeEmpty()
 	customerCount = 0;
 }
 
+
+//-------------------------------------------------------------------------------
+// deleteTable
+// steps through the current CustomerTable and assigns each element to NULL.
+// deletes CustomerTable and assigns to NULL.
+//-------------------------------------------------------------------------------
 void CustomerTable::deleteTable()
 {
 	for (int i = 0; i < size; i++)
@@ -84,6 +139,18 @@ void CustomerTable::deleteTable()
 	table = NULL;
 }
 
+
+//-------------------------------------------------------------------------------
+// addCustomer
+// adds a new Customer object to the CustomerTable. This function uses the 
+// customerID of the new Customer to determine a default hash. The location
+// associated with the default hash value is checked for collisions, and a
+// double hash is repeatedly called while collisions occur.
+// The new Customer object is stored in the first location that does not result
+// in a collision.
+// If the addition of a new Customer object caused the CustomerTable to become
+// too full, CustomerTable size is increased.
+//-------------------------------------------------------------------------------
 bool CustomerTable::addCustomer(Customer* newCustomer)
 {
 	int collisions = 0;
@@ -92,9 +159,9 @@ bool CustomerTable::addCustomer(Customer* newCustomer)
 	Node* newNode = new Node;
 	newNode->customerData = newCustomer;
 
-	int hash = performHash(newCustomer); //change to double hash, call recursively
+	int hash = performHash(newCustomer); 
 
-	if (table[hash] == NULL)
+	if (table[hash] == NULL) //insert customer
 	{
 		newNode->hashIndex = hash;
 		table[hash] = newNode;
@@ -112,7 +179,7 @@ bool CustomerTable::addCustomer(Customer* newCustomer)
 			isAdded = true;
 	}
 
-	if ((customerCount / size) >= 1.0) //if # of stored customers is greater than or equal to the size, increase the size
+	if ((customerCount / size) >= 0.75) //likelihood of collisions is inefficient
 	{
 		increaseTableSize();
 	}
@@ -121,19 +188,32 @@ bool CustomerTable::addCustomer(Customer* newCustomer)
 }
 
 
-
+//-------------------------------------------------------------------------------
+// performHash
+// performs a default hash using the customerID and the current CustomerTable
+// size
+//-------------------------------------------------------------------------------
 int CustomerTable::performHash(Customer* newCustomer) //default single hash
 {
 	int custID = newCustomer->getCustomerID();
 	return (custID % size);
 }
 
+
+//-------------------------------------------------------------------------------
+// performDoubleHash
+// if the default hash results in a collision, this function performs double
+// hashing recursively until a collision does not occur.
+// isOccupied() is used to determine if the CustomerTable element associated 
+// with the double hash is already occupied by a Customer object.
+//-------------------------------------------------------------------------------
 int CustomerTable::performDoubleHash(Customer* newCustomer, int& collisions)
 {
 	bool occupied = true;
 	int custID = newCustomer->getCustomerID();
 	int firstHash = custID % size;
 	int newMod = size - 2;
+	
 	int doubleHash = (newMod - (custID % newMod));
 	doubleHash = ((firstHash + (collisions * (doubleHash))) % size);
 
@@ -148,6 +228,12 @@ int CustomerTable::performDoubleHash(Customer* newCustomer, int& collisions)
 		return doubleHash;
 }
 
+
+//-------------------------------------------------------------------------------
+// isOccupied
+// Returns a boolean value to indicate if the current CustomerTable element 
+// is occupied by a Customer object.
+//-------------------------------------------------------------------------------
 bool CustomerTable::isOccupied(int& hash)
 {
 	if (table[hash] != NULL)
@@ -157,7 +243,11 @@ bool CustomerTable::isOccupied(int& hash)
 }
 
 
-//checks to see if target customer is already in the table
+//-------------------------------------------------------------------------------
+// isFound
+// Returns a boolean value indicating if the custID is already present in the
+// CustomerTable.
+//-------------------------------------------------------------------------------
 bool CustomerTable::isFound(int custID) const
 {
 	int hash = custID % size;
@@ -190,6 +280,11 @@ bool CustomerTable::isFound(int custID) const
 	return returnVal;
 }
 
+
+//-------------------------------------------------------------------------------
+// increaseTableSize
+// Increases the current CustomerTable size to allow for more efficient hashing.
+//-------------------------------------------------------------------------------
 void CustomerTable::increaseTableSize()
 {
 	int tableSize = (size * 2) - 1; //maintains odds, less collisions
@@ -208,7 +303,6 @@ void CustomerTable::increaseTableSize()
 			newNode->customerData = temp->customerData;
 			newNode->hashIndex = temp->hashIndex;
 
-			//int hash = newNode->hashIndex % tableSize;
 			newTable[temp->hashIndex] = newNode;
 
 			delete temp;
@@ -225,15 +319,20 @@ void CustomerTable::increaseTableSize()
 	//delete newTable?
 }
 
-
-bool CustomerTable::retrieveCustomer(int custID, Customer& cust)
+//-------------------------------------------------------------------------------
+// retrieveCustomer
+// Searches the current CustomerTable for custID. If custID is found, assigns
+// cust with the Customer object stored at that location. Function returns
+// a boolean to indicate if the custID was found in the CustomerTable.
+//-------------------------------------------------------------------------------
+bool CustomerTable::retrieveCustomer(int custID, Customer*& cust)
 {
 	int hash = custID % size;
 	bool isFound = false;
 
 	Node* temp = NULL;
 	
-	if (table[hash] == NULL || table[hash]->customerData->getCustomerID() != custID) //look at every element to check check for customerID
+	if (table[hash] == NULL || table[hash]->customerData->getCustomerID() != custID) //look at every element to check for customerID
 	{
 		for (int i = 0; i < size; i++)
 		{
@@ -243,18 +342,16 @@ bool CustomerTable::retrieveCustomer(int custID, Customer& cust)
 			{
 				if (temp->customerData->getCustomerID() == custID)
 				{
-					cust = *temp->customerData;
+					cust = temp->customerData;
 					isFound = true;
 					break;
 				}
 			}
 		}
 	}
-
-
 	else if (table[hash] == NULL || table[hash]->customerData->getCustomerID() == custID) //base case, default single hash location
 	{
-		cust = *table[hash]->customerData;
+		cust = table[hash]->customerData;
 		isFound = true;
 	}
 
@@ -265,7 +362,14 @@ bool CustomerTable::retrieveCustomer(int custID, Customer& cust)
 }
 
 
-bool CustomerTable::deleteCustomer(int custID, Customer& cust) //needs update 
+//-------------------------------------------------------------------------------
+// deleteCustomer
+// Searches the current CustomerTable to locate the specified custID. If found,
+// assigns cust with the Customer object at the location. The Customer object
+// is removed from the CustomerTable and a boolean is returned to indicate if the
+// Customer was found and removed.
+//-------------------------------------------------------------------------------
+bool CustomerTable::deleteCustomer(int custID, Customer*& cust)
 {
 	int hash = custID % size;
 	bool isFound = false;
@@ -280,7 +384,7 @@ bool CustomerTable::deleteCustomer(int custID, Customer& cust) //needs update
 
 			if (temp->customerData->getCustomerID() == custID)
 			{
-				cust = *temp->customerData;
+				cust = temp->customerData;
 				isFound = true;
 				break;
 			}
@@ -289,7 +393,7 @@ bool CustomerTable::deleteCustomer(int custID, Customer& cust) //needs update
 
 	else if (table[hash]->customerData->getCustomerID() == custID) //base case, default single hash location
 	{
-		cust = *table[hash]->customerData;
+		cust = table[hash]->customerData;
 		isFound = true;
 	}
 
@@ -304,7 +408,11 @@ bool CustomerTable::deleteCustomer(int custID, Customer& cust) //needs update
 }
 
 
-/*
+//-------------------------------------------------------------------------------
+// overloaded operator =
+// allows operator = to be used to assign one CustomerTable to another 
+// CustomerTable.
+//-------------------------------------------------------------------------------
 CustomerTable& CustomerTable::operator=(const CustomerTable& copyTable)
 {
 	if (this != &copyTable)
@@ -322,37 +430,31 @@ CustomerTable& CustomerTable::operator=(const CustomerTable& copyTable)
 			if (copyTable.table[i] != NULL)
 			{
 				Node* temp = copyTable.table[i];
-				Node* head = new Node;
-				Customer* cust = new Customer;
-				head->hashIndex = temp->hashIndex;
-				//head->next = NULL;
-				*cust = *temp->customerData;
-				head->customerData = cust;
-				table[i] = head;
-				//temp = temp->next;
-
-				while (temp != NULL)
-				{
-					Node* newNode = new Node;
-					cust = new Customer;
-				//	newNode->next = NULL;
-					*cust = *temp->customerData;
-					newNode->customerData = cust;
-					newNode-> hashIndex = temp->hashIndex;
-				//	temp = temp->next;
-				//	head = head->next;
-				}
+				table[i] = temp;
 			}
 		}
 	}
 	return *this;
-}*/
+}
 
+
+//-------------------------------------------------------------------------------
+// displayCustomers
+// Utilizes the overloaded << operator to output data associated with every
+// Customer object located within the CustomerTable.
+//-------------------------------------------------------------------------------
 void CustomerTable::displayCustomers()
 {
 	cout << *this << endl;
 }
 
+
+//-------------------------------------------------------------------------------
+// operator<<
+// Overloads << operator to define how << behaves with CustomerTables. First
+// name, last name, and customerID will be displayed for every Customer in the
+// CustomerTable.
+//-------------------------------------------------------------------------------
 ostream& operator<<(ostream& outs, const CustomerTable& rhs)
 {
 	for (int i = 0; i < rhs.size; i++)
