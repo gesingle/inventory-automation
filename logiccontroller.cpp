@@ -1,6 +1,16 @@
-//
-// Created by Garrett Singletary on 12/12/16.
-//
+/* ------------------------------------------------ logiccontroller.cpp ------------------------------------------------
+ Created by Garrett Singletary and Cody Snow on 12/01/2016
+ CSS343 Assignment #4
+ Date of Last Modification: 12/14/2016
+ -----------------------------------------------------------------------------------------------------------------------
+ This class implements the primary business logic for the movie store inventory system.
+ -----------------------------------------------------------------------------------------------------------------------
+Assumptions:
+    1. Invalid commands, customers, and movies are handled as per the assignment write up.
+    2. The supplied txt files are formatted correctly
+    3. C++ compiler is set to C++11
+ -----------------------------------------------------------------------------------------------------------------------
+*/
 
 #include "logiccontroller.h"
 #include <fstream>
@@ -44,6 +54,7 @@ void LogicController::buildMovieInventory() {
                 movieInventory->addClMovie(line);
                 break;
             default:
+                cout << "genre = " << genre << endl;
                 cout << "Genre not valid" << endl;
                 break;
         }
@@ -59,7 +70,7 @@ void LogicController::displayMovieInventory() {
 
 void LogicController::buildCustomerTable() {
     customerTable = new CustomerTable();
-
+    // /Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/
     ifstream custFile("/Users/GSingletary/Desktop/School/CSS343/A4/assignment4_data/data4customers.txt");
 
     if (!custFile)
@@ -201,8 +212,8 @@ void LogicController::parseBorrowReturn(string txtLine, char command) {
 }
 
 void LogicController::parseHistory(string line) {
-
     stringstream ss(line);
+    ss.ignore();
     ss.ignore();
 
     string custIDStr = "";
@@ -211,6 +222,7 @@ void LogicController::parseHistory(string line) {
         custIDStr += ss.get();
     }
     custID = stoi(custIDStr);
+    custHistory(custID);
 }
 void LogicController::borrowClMovie(int month, int year, string actor, int custID) {
 
@@ -219,7 +231,7 @@ void LogicController::borrowClMovie(int month, int year, string actor, int custI
     ClassicMovie* moviePtr;
     Customer* borrowCustomer = new Customer();
     bool found;
-    bool foundCust = customerTable->retrieveCustomer(custID, *borrowCustomer);
+    bool foundCust = customerTable->retrieveCustomer(custID, borrowCustomer);
 
     if(foundCust) {
         found = clMovies->retrieve(*movie, moviePtr);
@@ -235,6 +247,9 @@ void LogicController::borrowClMovie(int month, int year, string actor, int custI
             cout << "Movie not found." << endl;
         }
     }
+    else{
+        cout << "Customer not found" << endl;
+    }
     delete movie;
 }
 
@@ -245,7 +260,7 @@ void LogicController::borrowCoMovie(string title, int year, int custID) {
     ComedyMovie* moviePtr;
     Customer* borrowCustomer = new Customer();
     bool found;
-    bool foundCust = customerTable->retrieveCustomer(custID, *borrowCustomer);
+    bool foundCust = customerTable->retrieveCustomer(custID, borrowCustomer);
 
     if(foundCust) {
         found = coMovies->retrieve(*movie, moviePtr);
@@ -254,7 +269,6 @@ void LogicController::borrowCoMovie(string title, int year, int custID) {
                 moviePtr->setStock(moviePtr->getStock() - 1);
                 string customerBorrow = "B D F " + title + ", " + to_string(year);
                 borrowCustomer->addHistory(customerBorrow);
-
             } else {
                 cout << "Movie is out of stock" << endl;
             }
@@ -276,7 +290,7 @@ void LogicController::borrowDrMovie(string director, string title, int custID) {
     DramaMovie* moviePtr;
     Customer* borrowCustomer = new Customer();
     bool found;
-    bool foundCust = customerTable->retrieveCustomer(custID, *borrowCustomer);
+    bool foundCust = customerTable->retrieveCustomer(custID, borrowCustomer);
 
     if(foundCust) {
         found = drMovies->retrieve(*movie, moviePtr);
@@ -292,6 +306,9 @@ void LogicController::borrowDrMovie(string director, string title, int custID) {
             cout << "Movie not found." << endl;
         }
     }
+    else{
+        cout << "Customer not found" << endl;
+    }
     delete movie;
 }
 
@@ -305,7 +322,7 @@ void LogicController::returnCoMovie(string title, int year, int custID) {
     found = coMovies->retrieve(*movie, moviePtr);
     if (found)
     {
-        bool foundCust = customerTable->retrieveCustomer(custID, *returnCustomer);
+        bool foundCust = customerTable->retrieveCustomer(custID, returnCustomer);
         if (foundCust)
         {
 
@@ -317,6 +334,7 @@ void LogicController::returnCoMovie(string title, int year, int custID) {
                     moviePtr->setStock(moviePtr->getStock() + 1);
                     string customerReturn = "R D F " + title + ", " + to_string(year);
                     returnCustomer->addHistory(customerReturn);
+                    cout << "comedy returned" << endl;
                 }
 
                 else
@@ -347,7 +365,7 @@ void LogicController::returnClMovie(int month, int year, string actor, int custI
     found = clMovies->retrieve(*movie, moviePtr);
     if (found)
     {
-        bool foundCust = customerTable->retrieveCustomer(custID, *returnCustomer);
+        bool foundCust = customerTable->retrieveCustomer(custID, returnCustomer);
         if (foundCust)
         {
 
@@ -388,34 +406,27 @@ void LogicController::returnDrMovie(string director, string title, int custID) {
     bool found;
 
     found = drMovies->retrieve(*movie, moviePtr);
-    if (found)
-    {
-        bool foundCust = customerTable->retrieveCustomer(custID, *returnCustomer);
-        if (foundCust)
-        {
-
+    if (found) {
+        bool foundCust = customerTable->retrieveCustomer(custID, returnCustomer);
+        if (foundCust) {
             string customerBorrow = "B D D " + director + ", " + title;
-            bool borrowed = returnCustomer->hasBorrowed(customerBorrow);
-            {
-                if (borrowed)
-                {
+            bool borrowed = returnCustomer->hasBorrowed(customerBorrow);{
+                if (borrowed) {
                     moviePtr->setStock(moviePtr->getStock() + 1);
-
                     string customerReturn = "R D D " + director + ", " + title;
                     returnCustomer->addHistory(customerReturn);
-                }
+                    cout << "drama returned" << endl;
 
+                }
                 else
                     cout << "Customer didn't borrow movie.\n";
             }
         }
-        else
-        {
+        else {
             cout << "Customer not found.\n";
         }
     }
-    else
-    {
+    else {
         cout << "Movie not found.";
         delete moviePtr;
     }
@@ -426,7 +437,7 @@ void LogicController::custHistory(int custID) {
 
     Customer* customer = new Customer();
 
-    bool found = customerTable->retrieveCustomer(custID, *customer);
+    bool found = customerTable->retrieveCustomer(custID, customer);
     if (found)
         customer->displayHistory();
 }

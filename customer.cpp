@@ -3,7 +3,7 @@
 // Last Modified 12/12/2016 -> added operator>> and display functions
 //
 
-#include "Customer.h"
+#include "customer.h"
 
 using namespace std;
 
@@ -55,7 +55,7 @@ int Customer::getCustomerID() const
 
 void Customer::displayHistory() const // change to outstream
 {
-    cout << this << endl;
+    cout << *this << endl;
 }
 
 bool Customer::addHistory(string transaction)
@@ -77,10 +77,10 @@ bool Customer::hasBorrowed(string title)
 
 ostream& operator<<(ostream& outs, const Customer& rhs)
 {
+    outs << endl;
     outs << "Customer: " << rhs.getFName() << " " << rhs.getLName() << "  ID: " << rhs.getCustomerID() << endl;
-
     for (unsigned int i = 0; i < rhs.transHistory.size(); i++)
-        outs << rhs.transHistory[i] << endl;
+        outs << "   " << rhs.transHistory[i] << endl;
 
     return outs;
 

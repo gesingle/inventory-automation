@@ -5,7 +5,7 @@
 
 #ifndef CUSTOMERTABLE_H
 #define	CUSTOMERTABLE_H
-#include "Customer.h"
+#include "customer.h"
 
 
 //const int TABLESIZE = 20011; there is no point using a hash table so large that it would give every customer ID a unique spot 0-9999
@@ -29,7 +29,7 @@ public:
 
     bool addCustomer(Customer* customer);										//add a customer to the table
     bool deleteCustomer(int custID, Customer& customer);
-    bool retrieveCustomer(int custID, Customer& customer);						//retrieve the customer with specified customerID
+    bool retrieveCustomer(int custID, Customer*& customer);						//retrieve the customer with specified customerID
     void displayCustomers();
 
 

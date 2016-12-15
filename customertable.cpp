@@ -3,7 +3,7 @@
 // Last Modified 12/13/16 (added operator<< and display function, implemented double hash
 //
 
-#include "CustomerTable.h"
+#include "customertable.h"
 
 CustomerTable::CustomerTable()
 {
@@ -12,6 +12,8 @@ CustomerTable::CustomerTable()
 
     for (int i = 0; i < size; i++)
         table[i] = NULL;
+
+    customerCount = 0;
 }
 
 CustomerTable::CustomerTable(const CustomerTable& copy) //copy constructor, make a deep copy of 'copy' table
@@ -226,31 +228,35 @@ void CustomerTable::increaseTableSize()
 }
 
 
-bool CustomerTable::retrieveCustomer(int custID, Customer& cust) //needs update
+bool CustomerTable::retrieveCustomer(int custID, Customer*& cust)
 {
     int hash = custID % size;
     bool isFound = false;
 
     Node* temp = NULL;
 
-    if (table[hash]->customerData->getCustomerID() != custID) //look at every element to check check for customerID
+    if (table[hash] == NULL || table[hash]->customerData->getCustomerID() != custID) //look at every element to check check for customerID
     {
         for (int i = 0; i < size; i++)
         {
             temp = table[i];
 
-            if (temp->customerData->getCustomerID() == custID)
+            if (temp != NULL)
             {
-                cust = *temp->customerData;
-                isFound = true;
-                break;
+                if (temp->customerData->getCustomerID() == custID)
+                {
+                    cust = temp->customerData;
+                    isFound = true;
+                    break;
+                }
             }
         }
     }
 
-    else if (table[hash]->customerData->getCustomerID() == custID) //base case, default single hash location
+
+    else if (table[hash] == NULL || table[hash]->customerData->getCustomerID() == custID) //base case, default single hash location
     {
-        cust = *table[hash]->customerData;
+        cust = table[hash]->customerData;
         isFound = true;
     }
 
@@ -299,47 +305,6 @@ bool CustomerTable::deleteCustomer(int custID, Customer& cust) //needs update
     return isFound;
 }
 
-
-/*
-CustomerTable& CustomerTable::operator=(const CustomerTable& copyTable)
-{
-	if (this != &copyTable)
-	{
-		deleteTable();
-		size = copyTable.size;
-		customerCount = copyTable.customerCount;
-		table = new Node*[size];
-		for (int i = 0; i < size; i++)
-			table[i] = NULL;
-		for (int i = 0; i < size; i++)
-		{
-			if (copyTable.table[i] != NULL)
-			{
-				Node* temp = copyTable.table[i];
-				Node* head = new Node;
-				Customer* cust = new Customer;
-				head->hashIndex = temp->hashIndex;
-				//head->next = NULL;
-				*cust = *temp->customerData;
-				head->customerData = cust;
-				table[i] = head;
-				//temp = temp->next;
-				while (temp != NULL)
-				{
-					Node* newNode = new Node;
-					cust = new Customer;
-				//	newNode->next = NULL;
-					*cust = *temp->customerData;
-					newNode->customerData = cust;
-					newNode-> hashIndex = temp->hashIndex;
-				//	temp = temp->next;
-				//	head = head->next;
-				}
-			}
-		}
-	}
-	return *this;
-}*/
 
 void CustomerTable::displayCustomers()
 {

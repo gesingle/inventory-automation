@@ -7,9 +7,6 @@
 int main() {
 
     LogicController lc;
-    lc.buildMovieInventory();
-    lc.buildCustomerTable();
-    //lc.displayMovieInventory();
     lc.buildCommands();
 
     /*

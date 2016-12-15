@@ -5,7 +5,7 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
-#include "Person.h"
+#include "person.h"
 #include <iostream>
 #include <string>
 #include <vector>
