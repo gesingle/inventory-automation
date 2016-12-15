@@ -27,6 +27,13 @@ LogicController::LogicController() {
     buildCustomerTable();
 }
 
+// ------------------------------------------------ ~LogicController ---------------------------------------------------
+//  Destructor
+// ---------------------------------------------------------------------------------------------------------------------
+LogicController::~LogicController() {
+    deleteStorage();
+}
+
 // ------------------------------------------------ buildMovieInventory ------------------------------------------------
 //  Builds movie inventory from .txt file. Parses movies by genre and adds them to the appropriate movie tree
 // ---------------------------------------------------------------------------------------------------------------------
@@ -305,7 +312,7 @@ void LogicController::borrowClMovie(int month, int year, string actor, int custI
     // pointer to hold actual movie
     ClassicMovie* moviePtr;
     // pointer to hold customer
-    Customer* borrowCustomer = new Customer();
+    Customer* borrowCustomer;
     bool found;
     bool foundCust = customerTable->retrieveCustomer(custID, borrowCustomer);
 
@@ -344,7 +351,7 @@ void LogicController::borrowCoMovie(string title, int year, int custID) {
     // pointer to hold actual movie
     ComedyMovie* moviePtr;
     // pointer to hold customer
-    Customer* borrowCustomer = new Customer();
+    Customer* borrowCustomer;
     bool found;
     bool foundCust = customerTable->retrieveCustomer(custID, borrowCustomer);
 
@@ -382,7 +389,7 @@ void LogicController::borrowDrMovie(string director, string title, int custID) {
     // pointer to hold actual movie
     DramaMovie* moviePtr;
     // pointer to hold customer
-    Customer* borrowCustomer = new Customer();
+    Customer* borrowCustomer;
     bool found;
     bool foundCust = customerTable->retrieveCustomer(custID, borrowCustomer);
 
@@ -418,7 +425,7 @@ void LogicController::returnCoMovie(string title, int year, int custID) {
     // pointer to hold actual movie
     ComedyMovie* moviePtr;
     // pointer to hold customer
-    Customer* returnCustomer = new Customer();
+    Customer* returnCustomer;
     bool found;
     found = coMovies->retrieve(*movie, moviePtr);
 
@@ -458,7 +465,7 @@ void LogicController::returnClMovie(int month, int year, string actor, int custI
     // pointer to hold actual movie
     ClassicMovie* moviePtr;
     // pointer to hold customer
-    Customer* returnCustomer = new Customer();
+    Customer* returnCustomer;
     bool found;
     found = clMovies->retrieve(*movie, moviePtr);
 
@@ -469,14 +476,14 @@ void LogicController::returnClMovie(int month, int year, string actor, int custI
         if (foundCust) {
             string customerBorrow = "B D C " + to_string(month) + ", " + to_string(year) + actor;
             bool borrowed = returnCustomer->hasBorrowed(customerBorrow);{
-            // check if movie was previously borrowed by customer
-            if (borrowed) {
-                moviePtr->setStock(moviePtr->getStock() + 1);
-                string customerReturn = "R D C " + to_string(month) + ", " + to_string(year) + actor;
-                returnCustomer->addHistory(customerReturn);
-            }
-            else
-                cout << "Customer didn't borrow movie.\n";
+                // check if movie was previously borrowed by customer
+                if (borrowed) {
+                    moviePtr->setStock(moviePtr->getStock() + 1);
+                    string customerReturn = "R D C " + to_string(month) + ", " + to_string(year) + actor;
+                    returnCustomer->addHistory(customerReturn);
+                }
+                else
+                    cout << "Customer didn't borrow movie.\n";
             }
         }
         else {
@@ -500,7 +507,7 @@ void LogicController::returnDrMovie(string director, string title, int custID) {
     // pointer to hold actual movie
     DramaMovie* moviePtr;
     // pointer to hold customer
-    Customer* returnCustomer = new Customer();
+    Customer* returnCustomer;
     bool found;
     found = drMovies->retrieve(*movie, moviePtr);
 
@@ -533,13 +540,13 @@ void LogicController::returnDrMovie(string director, string title, int custID) {
     delete movie;
 }
 
-// ------------------------------------------------ custHistory ------------------------------------------------------
+// ------------------------------------------------ custHistory --------------------------------------------------------
 //  Executes commmand to display customer history
 // ---------------------------------------------------------------------------------------------------------------------
 void LogicController::custHistory(int custID) {
 
     // pointer to hold custmer object
-    Customer* customer = new Customer();
+    Customer* customer;
 
     // check if customer is in system
     bool found = customerTable->retrieveCustomer(custID, customer);
@@ -547,6 +554,14 @@ void LogicController::custHistory(int custID) {
         customer->displayHistory();
 }
 
+// ------------------------------------------------ deleteStorage --------------------------------------------------------
+//  Deletes storage pointers
+// ---------------------------------------------------------------------------------------------------------------------
+void LogicController::deleteStorage() {
+
+    delete customerTable;
+    delete movieInventory;
+}
 
 
 

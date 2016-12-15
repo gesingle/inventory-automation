@@ -27,6 +27,7 @@ class LogicController {
 
 public:
     LogicController();
+    ~LogicController();
     void buildMovieInventory();
     void buildCustomerTable();
     void displayMovieInventory();
@@ -46,6 +47,7 @@ private:
     void returnCoMovie(string, int, int);
     void returnDrMovie(string, string, int);
     void custHistory(int);
+    void deleteStorage();
 
 
 
